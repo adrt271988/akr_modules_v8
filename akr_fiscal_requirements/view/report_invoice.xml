@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="akr_report_invoice_document" inherit_id="account.report_invoice_document">
+    <xpath expr="//t[@t-call='report.external_layout']" position="attributes">
+		<attribute name="t-call"></attribute>
+	</xpath>
+    <xpath expr="/t/t/div/div[@class='row']" position="replace"/>
+    <xpath expr="//h2" position="replace"/>
+    <xpath expr="//div[@class='row mt32 mb32']" position="replace">
+        <div t-if="o.date_invoice">
+			<br/><br/><br/><br/>
+            <p t-field="o.date_invoice" align="right" style="font-size:12 px"/>
+            <br/>
+        </div>
+    </xpath>
+    <xpath expr="//table[@class='table table-condensed']" position="before">
+		<table style="margin-left:100 px;font-size:12 px">
+			<tbody>
+				<tr>
+					<td><span t-field="o.partner_id.name"/></td>
+				</tr>
+				<tr>
+					<td><span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/></td>
+					<td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+					<td align="right"><span t-field="o.address_shipping_id.street"/> <span t-field="o.address_shipping_id.street2"/></td>
+				</tr>
+				<tr>
+					<td><span t-field="o.partner_id.vat"/></td>
+				</tr>
+				<tr>
+					<td><div t-if="o.partner_id.phone"><span t-field="o.partner_id.phone"/></div><div t-if="not o.partner_id.phone">&#160;&#160;&#160;&#160;&#160;&#160;</div></td>
+				</tr>
+				<tr>
+					<td><div t-if="o.partner_id.fax"><span t-field="o.partner_id.fax"/></div><div t-if="not o.partner_id.fax">&#160;&#160;&#160;&#160;&#160;&#160;</div></td>
+				</tr>
+				<tr>
+					<td><div t-if="o.partner_id.ref"><span t-field="o.partner_id.ref"/></div><div t-if="not o.partner_id.ref">&#160;&#160;&#160;&#160;&#160;&#160;</div></td>
+				</tr>
+				<tr>
+					<td><div t-if="o.user_id.name"><span t-field="o.user_id.name"/></div><div t-if="not o.user_id.name">&#160;&#160;&#160;&#160;&#160;&#160;</div></td>
+					<td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+					<td align="right"><span t-field="o.payment_term.name"/></td>
+				</tr>
+				<tr>
+					<td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+					<td>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+					<td align="right"><span t-field="o.date_due"/></td>
+				</tr>
+			</tbody>
+		</table>
+    </xpath>
+    <xpath expr="/t/t/div/table[@class='table table-condensed']" position="replace">
+		<table class="table table-condensed" style="font-size:12 px">
+                <thead>
+				<tr>
+					<th>Código</th>
+					<th>Description</th>
+					<th>Quantity</th>
+					<th class="text-right">Unit Price</th>
+					<th class="text-right" groups="sale.group_discount_per_so_line">Discount (%)</th>
+					<th class="text-right">Amount</th>
+				</tr>
+			</thead>
+			<tbody class="invoice_tbody">
+				<tr t-foreach="o.invoice_line" t-as="l">
+					<td><span t-field="l.product_id.default_code"/></td>
+					<td><span t-field="l.name"/></td>
+					<td>
+						<span t-field="l.quantity"/>
+						<span t-field="l.uos_id"  groups="product.group_uom"/>
+					</td>
+					<td class="text-right">
+						<span t-field="l.price_unit"/>
+					</td>
+					<td class="text-right" groups="sale.group_discount_per_so_line"><span t-field="l.discount"/></td>
+					<td class="text-right">
+						<span t-field="l.price_subtotal" 
+							t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</xpath>
+	<xpath expr="/t/t/div/div/div[@class='col-xs-4 pull-right']" position="replace">
+		<div>
+			<div style="margin-left:15px;width:250px;float:left;">
+				<table class="table table-condensed" style="font-size:12 px">
+					<tr  class="border-black">
+						<td><strong>Cheque:</strong></td>
+						<td class="text-right"></td>
+						<td><strong>Recibido:</strong></td>
+						<td class="text-right"></td>
+					</tr>
+					<tr>
+						<td><strong>Efectivo:</strong></td>
+						<td class="text-right"></td>
+						<td><strong>Fecha:</strong></td>
+						<td class="text-right"></td>
+					</tr>
+					<tr>
+						<td><strong>Transf.:</strong></td>
+						<td class="text-right"></td>
+						<td><strong>Despachado:</strong></td>
+						<td class="text-right"></td>
+					</tr>
+					<tr class="border-black"><td></td><td></td><td></td><td></td></tr>
+				</table>
+			</div>
+			<div style="margin-left:40px;width:400px;float:left;">
+				<table class="table table-condensed" style="font-size:12 px">
+					<tr class="border-black">
+						<td><strong>Subtotal</strong></td>
+						<td class="text-right">
+							<span t-field="o.amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+						</td>
+						<td><strong>Base Imponible</strong></td>
+						<td class="text-right">
+							<span t-field="o.amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Descuento 1</strong></td>
+						<td class="text-right">0.00</td>
+						<td><strong>Impuestos (IVA)</strong></td>
+						<td class="text-right">
+							<span t-field="o.amount_tax" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Descuento 2</strong></td>
+						<td class="text-right">0.00</td>
+						<td><strong>Total</strong></td>
+						<td class="text-right">
+							 <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Total Cubicaje</strong></td>
+						<td class="text-right">0.00</td>
+					</tr>
+					<tr class="border-black"><td></td><td></td><td></td><td></td></tr>
+				</table>
+			</div>
+		</div>
+		<div style="clear:both"></div>
+		<div t-if="o.comment" style="margin-left:10px;font-size:12 px">
+            <strong>Comment:</strong>
+            <span t-field="o.comment"/>
+        </div>
+        <br/>
+		<div align="center" style="font-size:12 px">
+            <strong>FAVOR EMITIR CHEQUE A NOMBRE DE INVERSIONES AKR 58, C.A
+O SI LO PREFIERE PUEDE DEPOSITAR EN NUESTRA CUENTA CORRIENTE N° 0134-0059-81-0591008102 DEL BANCO BANESCO</strong>
+        </div>
+        <br/>
+		<div align="center" style="font-size:12 px">
+            CUALQUIER CHEQUE DEVUELTO RELACIONADO CON ESTA FACTURA CAUSARA EL 3% DEL MONTO DEL CHEQUE MAS EL I.V.A, CON UN
+MINIMO DE Bs. 50.°°, MAS INTERESES MORATORIOS A LA TASA DEL MERCADO VIGENTE PACTADOS EN ESTE EFECTO DE COMERCIO.
+        </div>
+	</xpath>
+    <xpath expr="//div[@t-if='o.tax_line']" position="replace"/>
+    <xpath expr="//p[@t-if='o.payment_term.note']" position="replace"/>
+    <xpath expr="//p[@t-if='o.comment']" position="replace"/>
+    <xpath expr="//p[@t-if='o.fiscal_position.note']" position="replace"/>
+</template>
+
+</data>
+</openerp>
