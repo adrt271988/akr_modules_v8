@@ -31,7 +31,7 @@ Requerimientos Fiscales para Venezuela
     """,
     'author': 'Alexander Rodriguez',
     'website': '',
-    'depends': ['l10n_ve_fiscal_requirements'],
+    'depends': ['l10n_ve_fiscal_requirements','account_invoice_shipping_address'],
     'data': [
             'view/report_invoice.xml',
     ],
