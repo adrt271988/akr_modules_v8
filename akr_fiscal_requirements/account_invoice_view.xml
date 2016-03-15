@@ -17,8 +17,11 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="l10n_ve_fiscal_requirements.account_invoice_ext_view_form_loc_ve2"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="journal_type" invisible="1"/>
+            </xpath>
             <xpath expr="//field[@name='parent_id']" position="attributes">
-                <attribute name='attrs'>{'required': [('type','in',['in_refund','out_refund'])]}</attribute>
+                <attribute name='attrs'>{'required': ['|',('type','in',['in_refund','out_refund']),('journal_type','in',['sale_debit','sale_refund'])]}</attribute>
             </xpath>
         </field>
     </record>
@@ -28,8 +31,11 @@
         <field name="model">account.invoice</field>
         <field name="inherit_id" ref="l10n_ve_fiscal_requirements.account_invoice_ext_view_supp_form_loc_ve2"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='journal_id']" position="after">
+                <field name="journal_type" invisible="1"/>
+            </xpath>
             <xpath expr="//field[@name='parent_id']" position="attributes">
-                <attribute name='attrs'>{'required': [('type','in',('in_refund','out_refund'))]}</attribute>
+                <attribute name='attrs'>{'required': ['|',('type','in',['in_refund','out_refund']),('journal_type','in',['purchase_debit','purchase_refund'])]}</attribute>
             </xpath>
         </field>
     </record>
