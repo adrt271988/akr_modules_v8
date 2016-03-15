@@ -160,9 +160,13 @@ MINIMO DE Bs. 50.°°, MAS INTERESES MORATORIOS A LA TASA DEL MERCADO VIGENTE PA
         </div>
 	</xpath>
     <xpath expr="//div[@t-if='o.tax_line']" position="replace"/>
+<!--
     <xpath expr="//p[@t-if='o.payment_term.note']" position="replace"/>
+-->
     <xpath expr="//p[@t-if='o.comment']" position="replace"/>
+<!--
     <xpath expr="//p[@t-if='o.fiscal_position.note']" position="replace"/>
+-->
 </template>
 
 </data>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="akr_account_invoice_ext_view_form_loc_ve" model="ir.ui.view">
+        <field name="name">akr.account.invoice.ext.view.form.loc.ve</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="l10n_ve_fiscal_requirements.account_invoice_ext_view_form_loc_ve"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='nro_ctrl']" position="replace">
+                <field name="nro_ctrl" required="1"/>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="akr_account_invoice_ext_view_form_loc_ve2" model="ir.ui.view">
+        <field name="name">akr.account.invoice.ext.view.form.loc.ve2</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="l10n_ve_fiscal_requirements.account_invoice_ext_view_form_loc_ve2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name='attrs'>{'required': [('type','in',['in_refund','out_refund'])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="akr_account_invoice_ext_view_supp_form_loc_ve2" model="ir.ui.view">
+        <field name="name">akr.account.invoice.ext.view.supp.form.loc.ve2</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="l10n_ve_fiscal_requirements.account_invoice_ext_view_supp_form_loc_ve2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name='attrs'>{'required': [('type','in',('in_refund','out_refund'))]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</data>
+</openerp>
