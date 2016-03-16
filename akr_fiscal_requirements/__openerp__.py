@@ -28,6 +28,7 @@
 Requerimientos Fiscales para Venezuela
 ====================================================
 * Se modifica el formato de facturas de compra y venta adaptándolo a los requerimientos de AKR
+* Se colocan en vistas de Factura los campos Factura Padre y Numero de Control como obligatorios
     """,
     'author': 'Alexander Rodriguez',
     'website': '',

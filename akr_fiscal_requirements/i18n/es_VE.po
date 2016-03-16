@@ -1,0 +1,178 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* akr_fiscal_requirements
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-16 01:39+0000\n"
+"PO-Revision-Date: 2016-03-16 01:39+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: akr_fiscal_requirements
+#: selection:account.invoice,type:0 selection:account.invoice.report,type:0
+#: selection:report.invoice.created,type:0
+msgid "Customer Refund"
+msgstr "Nota de Crédito Cliente"
+
+#. module: akr_fiscal_requirements
+#: model:ir.actions.act_window,name:account.action_invoice_tree3
+#: model:ir.ui.menu,name:account.menu_action_invoice_tree3
+msgid "Customer Refunds"
+msgstr "Notas de Crédito Clientes"
+
+#. module: akr_fiscal_requirements
+#: selection:account.invoice,type:0 selection:account.invoice.report,type:0
+#: code:addons/account/account_invoice.py:1023
+#: selection:report.invoice.created,type:0
+#: view:website:account.report_invoice_document
+#, python-format
+msgid "Supplier Refund"
+msgstr "Nota de crédito a proveedor"
+
+#. module: akr_fiscal_requirements
+#: model:ir.actions.act_window,name:account.action_invoice_tree4
+#: model:ir.ui.menu,name:account.menu_action_invoice_tree4
+msgid "Supplier Refunds"
+msgstr "Notas de Crédito Proveedores"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Amount"
+msgstr "Importe"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Base Imponible"
+msgstr "Base Imponible"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "CUALQUIER CHEQUE DEVUELTO RELACIONADO CON ESTA FACTURA CAUSARA EL 3% DEL MONTO DEL CHEQUE MAS EL I.V.A, CON UN\n"
+"MINIMO DE Bs. 50.°°, MAS INTERESES MORATORIOS A LA TASA DEL MERCADO VIGENTE PACTADOS EN ESTE EFECTO DE COMERCIO."
+msgstr "CUALQUIER CHEQUE DEVUELTO RELACIONADO CON ESTA FACTURA CAUSARA EL 3% DEL MONTO DEL CHEQUE MAS EL I.V.A, CON UN\n"
+"MINIMO DE Bs. 50.°°, MAS INTERESES MORATORIOS A LA TASA DEL MERCADO VIGENTE PACTADOS EN ESTE EFECTO DE COMERCIO."
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Cheque:"
+msgstr "Cheque:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Comment:"
+msgstr "Comentario:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Código"
+msgstr "Código"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Description"
+msgstr "Descripción"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Descuento 1"
+msgstr "Descuento 1"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Descuento 2"
+msgstr "Descuento 2"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Despachado:"
+msgstr "Despachado:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Discount (%)"
+msgstr "Descuento (%)"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Efectivo:"
+msgstr "Efectivo:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "FAVOR EMITIR CHEQUE A NOMBRE DE INVERSIONES AKR 58, C.A\n"
+"O SI LO PREFIERE PUEDE DEPOSITAR EN NUESTRA CUENTA CORRIENTE N° 0134-0059-81-0591008102 DEL BANCO BANESCO"
+msgstr "FAVOR EMITIR CHEQUE A NOMBRE DE INVERSIONES AKR 58, C.A\n"
+"O SI LO PREFIERE PUEDE DEPOSITAR EN NUESTRA CUENTA CORRIENTE N° 0134-0059-81-0591008102 DEL BANCO BANESCO"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Fecha:"
+msgstr "Fecha:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Impuestos (IVA)"
+msgstr "Impuestos (IVA)"
+
+#. module: akr_fiscal_requirements
+#: model:ir.model,name:akr_fiscal_requirements.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Recibido:"
+msgstr "Recibido:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Subtotal"
+msgstr "Subtotal"
+
+#. module: akr_fiscal_requirements
+#: field:account.invoice,journal_type:0
+msgid "Tipo de Diario"
+msgstr "Tipo de Diario"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Total"
+msgstr "Total"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Total Cubicaje"
+msgstr "Total Cubicaje"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Transf.:"
+msgstr "Transf.:"
+
+#. module: akr_fiscal_requirements
+#: view:website:account.report_invoice_document
+msgid "Unit Price"
+msgstr "Precio unidad"
+
+#. module: akr_fiscal_requirements
+#: view:account.invoice:akr_fiscal_requirements.akr_account_invoice_ext_view_supp_form_loc_ve2
+msgid "{'required': ['|',('type','in',['in_refund','out_refund']),('journal_type','in',['purchase_debit','purchase_refund'])]}"
+msgstr "{'required': ['|',('type','in',['in_refund','out_refund']),('journal_type','in',['purchase_debit','purchase_refund'])]}"
+
+#. module: akr_fiscal_requirements
+#: view:account.invoice:akr_fiscal_requirements.akr_account_invoice_ext_view_form_loc_ve2
+msgid "{'required': ['|',('type','in',['in_refund','out_refund']),('journal_type','in',['sale_debit','sale_refund'])]}"
+msgstr "{'required': ['|',('type','in',['in_refund','out_refund']),('journal_type','in',['sale_debit','sale_refund'])]}"
+

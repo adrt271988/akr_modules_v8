@@ -25,23 +25,10 @@ from openerp import models, fields, api, _
 from openerp.exceptions import except_orm, Warning, RedirectWarning
 from openerp.tools import float_compare
 import openerp.addons.decimal_precision as dp
-#~ from openerp.osv import fields, osv
 
 MAGIC_COLUMNS = ('id', 'create_uid', 'create_date', 'write_uid', 'write_date')
 
 class akrFiscalAccountInvoice(models.Model):
     _inherit = "account.invoice"
-    #~ @api.multi
-    #~ def get_journal_type(self, cr, uid, ids, name, arg, context=None):
-        #~ print 'entre!!!!!!!!!!!!'
-        #~ if self:
-            #~ for invoice in self:
-                #~ context = invoice._context
-                #~ if context.get('journal_type'):
-                    #~ print '*************',context['journal_type']
-                    #~ invoice.journal_type = context['journal_type']
-                #~ else:
-                    #~ print '************',invoice.journal_id
-                    #~ invoice.journal_type = invoice.journal_id and invoice.journal_id.type or False
     
     journal_type = fields.Char(string='Tipo de Diario',default=lambda self: self._context.get('journal_type'))
