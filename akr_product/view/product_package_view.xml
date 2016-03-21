@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+<!--  <<<<<<<<<<<<<<<<< vistas de Empaquetado en la ficha del productto (Herencia) >>>>>>>>>>>>>>   -->
+
+    <record id="inherit_packaging_form_view_without_product" model="ir.ui.view">
+        <field name="name">inherit.packaging.form.view.without.product</field>
+        <field name="model">product.packaging</field>
+        <field name="inherit_id" ref="product.product_packaging_form_view_without_product" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="qty"]' position='replace'>
+                <field name="qty" digits="(14, 5)"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="inherit_packaging_tree_view_without_product" model="ir.ui.view">
+        <field name="name">inherit.packaging.tree.view.without.product</field>
+        <field name="model">product.packaging</field>
+        <field name="inherit_id" ref="product.product_packaging_tree_view_product" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="qty"]' position='replace'>
+                <field name="qty" digits="(14, 5)"/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>

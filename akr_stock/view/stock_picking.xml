@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+         <record id="inh_view_picking_form" model="ir.ui.view">
+            <field name="name">inh.stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- Oculta el boton "Forzar Disponibilidad" -->
+                <xpath expr="//button[@name='force_assign']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <!-- Restringe el boton "Revertir Transferencia solo para administradores" -->
+                <xpath expr="//button[@name='290']" position="replace">
+                    <button name="290" string="Reverse Transfer" states="done" type="action" groups="stock.group_stock_manager"/>
+                </xpath>
+
+                <!-- Restringe el boton "Cancelar Transferencia solo para Compras" -->
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" states="assigned,confirmed,partially_available,draft,waiting" string="Cancel Transfer" groups="purchase.group_purchase_manager" type="object"/>
+                </xpath>
+                <!-- Oculta el campo "Empresa" -->
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" groups="purchase.group_purchase_manager"/>
+                </xpath>
+                <!-- Coloca el campo "Fecha de recepcion" -->
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="date_reception"/>
+                </xpath>
+                <!-- Cambia la etiqueta "Ref. seguimiento transportista" por "Guia" " -->
+                <xpath expr="//field[@name='carrier_tracking_ref']" position="replace">
+                   <field name="carrier_tracking_ref" string="Guía"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="inh_view_picking_tree" model="ir.ui.view">
+            <field name="name">inh.stock.picking.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+
+                <!-- Oculta el campo "Empresa" -->
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" groups="purchase.group_purchase_manager"/>
+                </xpath>
+
+                <!-- Coloca el campo "Fecha Prevista" -->
+                <xpath expr="//field[@name='min_date']" position="replace">
+                   <field name="min_date" invisible="0"/>
+                </xpath>
+
+                <!-- Coloca el campo "Fecha Transferencia" -->
+                <xpath expr="//field[@name='min_date']" position="after">
+                   <field name="date_done" invisible="0"/>
+                </xpath>
+
+                <!-- Coloca el campo "Fecha de Recepcion" -->
+                <xpath expr="//field[@name='date_done']" position="after">
+                   <field name="date_reception"/>
+                </xpath>
+
+                <!-- Coloca el campo "Transportista" -->
+                <xpath expr="//field[@name='backorder_id']" position="before">
+                   <field name="carrier_id"/>
+                </xpath>
+
+                <!-- Coloca el campo "Guía" -->
+                <xpath expr="//field[@name='backorder_id']" position="before">
+                   <field name="carrier_tracking_ref" string="Guía"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inh_view_picking_search" model="ir.ui.view">
+            <field name="name">inh.stock.picking.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <!-- Agrega filtros de mes actual y mes anterior -->
+                <xpath expr="//filter[@name='backorder']" position="after">
+                    <filter name="prev_month" icon="terp-go-month" string="Mes anterior" domain="[('date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date','&lt;',time.strftime('%%Y-%%m-01'))]"/>
+                    <filter name="current_month" icon="terp-go-month" string="Mes actual"  domain="[('date','&lt;=',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                </xpath>
+                <xpath expr="//filter[@string='Procurement Group']" position="after">
+                    <filter string="Ubicación destino" domain="[]" context="{'group_by':'location_dest_id'}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</openerp>

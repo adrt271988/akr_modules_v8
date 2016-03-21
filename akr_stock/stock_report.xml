@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <report id="stock.report_picking_list"
+            model="stock.picking"
+            name="akr.stock.picking.list"
+            string="Picking Slip"
+            rml="akr_stock/report/akr_packing_list.rml"
+            header="False"
+            auto="False"
+        />
+
+        <report id="stock.report_picking_list_in"
+            model="stock.picking.in"
+            name="akr.stock.picking.list.in"
+            string="Receipt Slip"
+            rml="akr_stock/report/akr_packing_list.rml"
+            header="False"
+            auto="False"
+        />
+
+        <report id="stock.report_picking_list_out"
+            model="stock.picking.out"
+            name="akr.stock.picking.list.out"
+            string="Delivery Slip"
+            rml="akr_stock/report/akr_packing_list.rml"
+            header="False"
+            auto="False"
+        />
+
+    </data>
+</openerp>

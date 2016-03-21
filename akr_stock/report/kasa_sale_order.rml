@@ -1,0 +1,423 @@
+<?xml version="1.0"?>
+<document filename="sale_order.pdf">
+    <template pageSize="(21.59cm,27.94cm)" title="Invoice" author="Edgar Rivero" allowSplitting="20">
+        <pageTemplate id="first">
+            <frame id="first" x1="1cm" y1="1cm" width="19.59cm" height="18.0cm"/>
+            <pageGraphics>
+                <image x="1.8cm" y="26cm" width="50.06mm" height="50.06mm">[[ sale.company_id.logo or removeParentNode('image') ]]</image>
+                <fill color="black" />
+                <stroke color="black" />
+                <setFont name="Helvetica" size="8" />
+                <drawString x="15.7cm" y="24.05cm"><pageNumber/>  /</drawString>
+                <drawString x="17.6cm" y="24.05cm"><pageCount/></drawString>
+                <!--    PAGE HEADER    -->
+                <place x="12cm" y="25.0cm" width="8.0cm" height="2.0cm">
+                    <para style="P2_right" textColor="grey"><b>PROFORMA INVOICE [[ ((sale.state in ['draft','sent']) or removeParentNode('para')) and '' ]]</b></para>
+                    <para style="P2_right" textColor="grey"><b>SALE ORDER [[ ((sale.state not in ['draft','sent']) or removeParentNode('para')) and '' ]]</b></para>
+                </place>
+                <place x="1.8cm" y="15.7cm" width="18.0cm" height="10cm">
+                    <blockTable colWidths="9.0cm,9.0cm" style="tabla_box">
+                        <tr>
+                            <td>
+                                <para style="P7"><b>[[ sale.company_id.partner_id.name ]]</b></para>
+                            </td>
+                            <td>
+                                <para style="P7"><b>RUSAC:</b> [[ sale.company_id.partner_id.vat[2:] or '' ]]</para>
+                            </td>
+                        </tr>
+                    </blockTable>
+                    <blockTable colWidths="18.0cm" style="tabla_box_center">
+                        <tr>
+                            <td>
+                                <para style="P6_center">[[ sale.company_id.partner_id.street ]] [[ sale.company_id.partner_id.street2 ]], City of [[ sale.company_id.partner_id.city ]], [[ sale.company_id.partner_id.country_id.name ]]</para>
+                            </td>
+                        </tr>
+                    </blockTable>
+                    <blockTable colWidths="9.0cm,9.0cm" style="tabla_grid">
+                        <tr>
+                            <td>
+                                <para style="P7">EMAIL: [[ sale.company_id.partner_id.email ]]
+                                Tels: [[ sale.company_id.partner_id.phone ]] Fax: [[ sale.company_id.partner_id.fax ]]</para>
+                            </td>
+                            <td>
+                                <blockTable colWidths="4.5cm,4.5cm" style="Table_subrayado_centro">
+                                    <tr>
+                                        <td>
+                                            <para style="P7"><b>PI No.</b> [[ sale.name or 'NOT NUMBER' ]]</para>
+                                        </td>
+                                        <td>
+                                            <para style="P7_bold">PAGES:</para>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <para style="P7"><b>DATE:</b> [[ formatLang(sale.date_order, date=True) or 'NOT DATE' ]]</para>
+                                        </td>
+                                        <td>
+                                            <para style="P7"><b>PURCHASE NUMBER:</b> [[ (sale.client_order_ref or '') ]]</para>
+                                        </td>
+                                    </tr>
+                                </blockTable>
+                            </td>
+                        </tr>
+                    </blockTable>
+                    <blockTable colWidths="9.0cm,9.0cm" style="tabla_grid">
+                        <tr>
+                            <td>
+                                <para style="P7_bold">CONSIGNEE</para>
+                                <para style="P7">[[ sale.partner_id.name ]], [[ sale.partner_id.ref ]] [[ sale.partner_id.vat[2:] ]]
+                                 [[ sale.partner_id.street ]][[ sale.partner_id.street2 and ', '+sale.partner_id.street2 ]]
+                                [[ sale.partner_id.city ]][[ sale.partner_id.country_id and ', '+sale.partner_id.country_id.name ]]
+                                TELF: [[ sale.partner_id.phone ]]
+                                EMAIL: [[ sale.partner_id.email ]]</para>
+                            </td>
+                            <td>
+                                <para style="P7_bold">SHIP TO:</para>
+                                <para style="P7">[[ sale.partner_shipping_id.name ]] [[ sale.partner_shipping_id.vat[2:] ]]
+                                [[ sale.partner_shipping_id.street ]] [[ sale.partner_shipping_id.street2 ]]
+                                [[ sale.partner_shipping_id.city ]][[ sale.partner_shipping_id.country_id and ', '+sale.partner_shipping_id.country_id.name ]]
+                                TELF: [[ sale.partner_shipping_id.phone ]]
+                                EMAIL: [[ sale.partner_shipping_id.email ]]</para>
+                            </td>
+                        </tr>
+                    </blockTable>
+                    <blockTable colWidths="9.0cm,9.0cm" style="tabla_grid">
+                        <tr>
+                            <td>
+                                <blockTable colWidths="4.5cm,4.5cm" style="Table_line_lateral">
+                                    <tr>
+                                        <td>
+                                            <para style="P7_bold">PORT OF LOADING:</para>
+                                            <para style="P7">[[ sale.shop_id and sale.shop_id.name or '' ]]</para>
+                                        </td>
+                                        <td>
+                                            <para style="P7_bold">FINAL DESTINATION:</para>
+                                            <para style="P7">[[ sale.partner_shipping_id.fax ]]</para>
+                                        </td>
+                                    </tr>
+                                </blockTable>
+                            </td>
+                            <td>
+                                <blockTable colWidths="4.5cm,4.5cm" style="Table_line_lateral">
+                                    <tr>
+                                        <td>
+                                            <para style="P7_bold">TERMS OF DELIVERY:</para>
+                                            <para style="P7">[[ sale.incoterm and sale.incoterm.name or '' ]]</para>
+                                        </td>
+                                        <td>
+                                            <para style="P7_bold">PAYMENT TERMS:</para>
+                                            <para style="P7">[[ sale.payment_term and sale.payment_term.name or '' ]]</para>
+                                        </td>
+                                    </tr>
+                                </blockTable>
+                            </td>
+                        </tr>
+                    </blockTable>
+                </place>
+                <setFont name="Helvetica-Bold" size="6" />
+                <drawString x="6.0cm" y="1.75cm">ALL THE BANK CHARGES INCLUDING COLLECT CHARGES ARE TO BE DONE BY THE CONSIGNEE.</drawString>
+                <lines>1.0cm 1.6cm 20.8cm 1.6cm</lines>
+                <place x="1.3cm" y="0cm" height="1.5cm" width="20.0cm">
+                    <para style="P14">[[ sale.company_id.rml_footer or '' ]]</para>
+                </place>
+            </pageGraphics>
+        </pageTemplate>
+    </template>
+
+<stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Standard_Outline_Center">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,-1" stop="2,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table_subrayado">
+      <blockAlignment value="LEFT" />
+      <blockValign value="CENTER" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1" />
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="6,0" stop="6,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="6,0" stop="6,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="7,0" stop="7,0" />
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="6,0" stop="7,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Table_subrayado_centro">
+      <blockAlignment value="LEFT" />
+      <blockValign value="CENTER" />
+<!--
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1" />
+-->
+<!--
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,1" />
+-->
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,-1" stop="1,-1" />
+<!--
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,1" />
+-->
+    </blockTableStyle>
+    <blockTableStyle id="Table_subrayado_final">
+      <blockAlignment value="LEFT" />
+      <blockValign value="CENTER" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1" />
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="6,0" stop="6,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="6,0" stop="6,0" />
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1" />
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="7,0" stop="7,0" />
+      <lineStyle kind="LINEAFTER" colorName="#000000" start="6,0" stop="7,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="Table_line_lateral">
+<!--
+      <blockAlignment value="CENTER"/>
+      <blockValign value="TOP"/>
+-->
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,-1" stop="-1,1" />
+    </blockTableStyle>
+    <blockTableStyle id="tabla_grid">
+<!--
+      <blockAlignment value="LEFT" />
+-->
+      <blockAlignment value="CENTER" />
+      <blockValign value="TOP" />
+      <lineStyle kind="GRID" colorName="#000000" />
+    </blockTableStyle>
+    <blockTableStyle id="tabla_box">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="CENTER"/>
+      <lineStyle kind="BOX" colorName="#000000" />
+    </blockTableStyle>
+    <blockTableStyle id="tabla_box_rayado">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="CENTER"/>
+      <lineStyle kind="BOX" colorName="#000000" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="4,0" stop="4,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="5,0" stop="5,-1" />
+      <lineStyle kind="LINEBEFORE" colorName="#000000" start="6,0" stop="6,-1" />
+    </blockTableStyle>
+    <blockTableStyle id="tabla_box_center">
+      <blockAlignment value="CENTER"/>
+      <blockValign value="CENTER"/>
+      <lineStyle kind="BOX" colorName="#000000" />
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="8.0" leading="15"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P2_right" fontName="Helvetica" fontSize="16.0" leading="15" alignment="RIGHT"/>
+    <paraStyle name="P3" fontName="Helvetica"/>
+    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="8.0" leading="11"/>
+    <paraStyle name="P6_center" fontName="Helvetica" fontSize="8.0" leading="11" aligment="CENTER"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="8.0" leading="10" aligment="LEFT"/>
+    <paraStyle name="P7_right" fontName="Helvetica" fontSize="8.0" leading="10" aligment="RIGHT"/>
+    <paraStyle name="P7_bold" fontName="Helvetica-Bold" fontSize="8.0" leading="10" aligment="LEFT"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P10_right" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="RIGHT"/>
+    <paraStyle name="P11" fontName="Helvetica-Bold" fontSize="10.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P13" fontName="Helvetica-Bold" fontSize="8.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P14" fontName="Helvetica-Bold" fontSize="6.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
+<!--
+    <images/>
+-->
+  </stylesheet>
+  
+  <story>
+    <pto>
+    <pto_header>
+    <blockTable colWidths="1.5cm,9.0cm,1.5cm,2.0cm,2.0cm,2.0cm" style="tabla_grid">
+      <tr>
+        <td>
+          <para style="P10">COD. REF</para>
+        </td>
+        <td>
+          <para style="P10">DESCRIPTION</para>
+        </td>
+        <td>
+          <para style="P10">ORIG</para>
+        </td>
+        <td>
+          <para style="P10">QTY.</para>
+        </td>
+        <td>
+          <para style="P10">UNIT PRICE</para>
+        </td>
+        <td>
+          <para style="P10">AMOUNT IN US$</para>
+        </td>
+      </tr>
+    </blockTable>
+    </pto_header>
+    
+    <section>
+    <para style="P1">[[ repeatIn(objects,'sale') ]]</para>
+    <para style="P1">[[ calc_total(sale) ]]</para>
+    <section>
+
+    <blockTable colWidths="1.5cm,9.0cm,1.5cm,2.0cm,2.0cm,2.0cm" style="tabla_grid">
+      <tr>
+        <td>
+          <para style="P10">COD. REF</para>
+        </td>
+        <td>
+          <para style="P10">DESCRIPTION</para>
+        </td>
+        <td>
+          <para style="P10">ORIG</para>
+        </td>
+        <td>
+          <para style="P10">QTY.</para>
+        </td>
+        <td>
+          <para style="P10">UNIT PRICE</para>
+        </td>
+        <td>
+          <para style="P10">AMOUNT IN US$</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="1.5cm,9.0cm,1.5cm,2.0cm,2.0cm,2.0cm" style="tabla_box_rayado">
+      <tr>
+        <td>
+          <para style="P7">[[ repeatIn(sale.order_line,'line') ]][[ line.product_id.default_code ]]</para>
+        </td>
+        <td>
+          <para style="P7">[[ line.product_id.name ]]</para>
+        </td>
+        <td>
+          <para style="P7">[[ line.product_id.description_2 ]]</para>
+        </td>
+        <td>
+          <para style="P9">[[ line.product_uom_qty ]]</para>
+        </td>
+        <td>
+          <para style="P8">[[ line.price_unit ]]</para>
+        </td>
+        <td>
+          <para style="P8">[[ line.price_subtotal ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="14.0cm,2.0cm,2.0cm" style="Table_subrayado_final">
+      <tr>
+        <td>
+          <para style="P11"></para>
+        </td>
+        <td>
+          <para style="P12">SUB-TOTAL</para>
+        </td>
+        <td>
+          <para style="P12">[[ formatLang(get_sub_total(sale)) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="14.0cm,2.0cm,2.0cm" style="Table_subrayado_final">
+      <tr>
+        <td>
+          <para style="P11"></para>
+        </td>
+        <td>
+          <para style="P12">FREIGHT</para>
+        </td>
+        <td>
+          <para style="P12">[[ formatLang(freight_get(sale)) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="14.0cm,2.0cm,2.0cm" style="Table_subrayado_final">
+      <tr>
+        <td>
+          <para style="P11"></para>
+        </td>
+        <td>
+          <para style="P12">INSURANCE</para>
+        </td>
+        <td>
+          <para style="P12">[[ formatLang(get_total_insurance(sale)) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="14.0cm,2.0cm,2.0cm" style="Table_subrayado_final">
+      <tr>
+        <td>
+          <para style="P11"></para>
+        </td>
+        <td>
+          <para style="P12">TOTAL</para>
+        </td>
+        <td>
+          <para style="P12">[[ formatLang(get_total_sale(sale)) ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    </section>
+    <para style="P1"> AMOUNT CHARGEABLE IN US $ [[ get_total_sale(sale) ]]</para>
+    <para style="P1">COMMENTS</para>
+    <para style="P1">[[ sale.note or '' ]]</para>
+    </section>
+    </pto>
+  </story>
+</document>

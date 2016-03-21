@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record id="view_partner_form_inherit" model="ir.ui.view">
+            <field name="name">base.view.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='parent_id']" position="before">
+                    <label for="vat" string="RIF"/>
+                    <div name="vat_info">
+                        <field name="vat" required="1" on_change="vat_change(vat)" placeholder="Ejm. VEJ301935167" class="oe_inline"/>
+                        <button colspan="2" name="button_check_vat" string="Validar RIF" type="object" icon="gtk-execute" class="oe_inline"/>
+                        <field name="partner_type" on_change="type_change(partner_type)" attrs="{'required':[('validated','=',True)]}"/>
+                        <field name="validated" invisible="1"/>
+                    </div>
+                </xpath>
+<!--
+                <xpath expr="//field[@name='vat_subjected']" position="replace">
+
+                </xpath>-->
+                <xpath expr="//field[@name='user_id']" position="replace">
+                        <field name="user_id" attrs="{'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='street']" position="replace">
+                         <field name="street"  placeholder="Street..." attrs="{'readonly': [('use_parent_address','=',True)],'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='city']" position="replace">
+                         <field name="city" placeholder="City"  style="width: 40%" attrs="{'readonly': [('use_parent_address','=',True)],'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='state_id']" position="replace">
+                         <field name="state_id" class="oe_no_button"  placeholder="Estado" style="width: 37%" options="{&quot;no_open&quot;: True}" on_change="onchange_state(state_id)" attrs="{'readonly': [('use_parent_address','=',True)],'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="replace">
+                         <field name="country_id"  placeholder="Country" class="oe_no_button" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('use_parent_address','=',True)],'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="view_partner_property_form_inherit" model="ir.ui.view">
+            <field name="name">view.partner.property.form.inh</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='accounting']" position="replace">
+                        <page string="Accounting" col="4" name="accounting" attrs="{'invisible': [('is_company','=',False),('parent_id','!=',False)]}" groups="base.group_user">
+                    <group>
+                        <group>
+                            <field name="property_account_position" widget="selection"/>
+                        </group>
+                        <group>
+                            <field name="last_reconciliation_date"/>
+                        </group>
+                        <group>
+                            <field name="property_account_receivable" groups="base.group_user" />
+                            <field name="property_payment_term" widget="selection"/>
+                            <field name="credit"/>
+                            <field name="credit_limit"/>
+                        </group>
+                        <group>
+                            <field name="property_account_payable" groups="base.group_user"/>
+                            <field name="property_supplier_payment_term" widget="selection"/>
+                            <field name="debit"/>
+                        </group>
+                    </group>
+                    <field name="bank_ids" context="{'default_partner_id': active_id, 'form_view_ref': 'base.view_partner_bank_form'}">
+                        <tree string="Bank Details">
+                            <field name="state" invisible="1"/>
+                            <field name="sequence" invisible="1"/>
+                            <field name="acc_number"/>
+                            <field name="bank_name"/>
+                            <field name="owner_name"/>
+                        </tree>
+                    </field>
+                </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

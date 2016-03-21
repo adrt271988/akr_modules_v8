@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report
+            auto="False"
+            id="account.account_invoices"
+            model="account.invoice"
+            name="akr.account.invoice"
+            rml="akr_invoice/report/invoice_akr.rml"
+            string="Invoices"
+            usage="default"
+            header="False"
+            />
+    </data>
+</openerp>
+<!--
+            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+            attachment_use="True"-->

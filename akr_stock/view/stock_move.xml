@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--
+Herencia de vista para ocultar el boton "Desechar Productos"
+-->
+         <record id="inh_view_move_picking_tree" model="ir.ui.view">
+            <field name="name">inh.stock.move.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='%(stock.move_scrap)d']" position="replace">
+                    <button name="%(stock.move_scrap)d"
+                       string="Scrap Products" type="action"
+                       icon="terp-gtk-jump-to-ltr" context="{'scrap': True}"
+                       states="draft,waiting,confirmed,assigned"
+                       groups="stock.group_stock_user" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_move_search_inh" model="ir.ui.view">
+            <field name="name">stock.move.search</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_search"/>
+            <field name="arch" type="xml">
+                    <xpath expr="//filter[@string='Today']" position="after">
+                        <!--<filter icon="terp-go-month" string="This Month" domain="[('date','&lt;=',(context_today()+relativedelta(day=31)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(context_today()-relativedelta(day=1)).strftime('%%Y-%%m-%%d'))]"/>-->
+                        <filter string="Semana anterior"  name="Last Week" domain="[('date','&gt;=', ((context_today()+datetime.timedelta(days=-7)).strftime('%Y-%m-%d'))), ('date','&lt;=', ((context_today()).strftime('%Y-%m-%d')))]" help="This Week"/>
+                        <filter string="Semana actual"  name="This Week" domain="[('date','&gt;=', ((context_today()).strftime('%Y-%m-%d'))), ('date','&lt;=', ((context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d')))]" help="This Week"/>
+                        
+                        <filter name="prev_month" icon="terp-go-month" string="Mes anterior" domain="[('date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date','&lt;',time.strftime('%%Y-%%m-01'))]"/>
+                        <filter name="current_month" icon="terp-go-month" string="Mes actual"  domain="[('date','&lt;=',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                        
+                        <filter icon="terp-go-month" name="prev_year"  string="Año anterior" domain="[('date','&gt;=',(context_today()-relativedelta(years=1)).strftime('%%Y-01-01')),('date','&lt;=',(context_today()-relativedelta(years=1)).strftime('%%Y-12-31'))]"/>
+                        <!--<filter icon="terp-go-year" string="Año anterior" domain="[('date','&lt;=', (context_today()-relativedelta(day=31,months=12,years=1)).strftime('%%Y-%%m-%%d')),('date','&gt;=',(context_today()-relativedelta(day=1,months=1,years=1)).strftime('%%Y-%%m-%%d'))]" help="Last year"/>-->
+                        <filter icon="terp-go-year" name="curr_year" string="Año actual" domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]" help="Current Year"/>
+                    </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

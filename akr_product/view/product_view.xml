@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record id="product_normal_form_view_kasa_inherit" model="ir.ui.view">
+            <field name="name">product.normal.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//div[@class='oe_title']" position="inside">
+                        <label class="oe_edit_only" for="brand"/>
+                        <h2><field name="brand" class="oe_inline"/></h2>
+                    </xpath>
+
+                    <xpath expr="/form/sheet/notebook/page[@string='Information']/group" position="inside">
+                        <group>
+                            <field name="ref_2"/>
+                            <field name="description_2"/>
+                        </group>
+                        <group>
+                            <field name="arancel_cod"/>
+                            <field name="moq"/>
+                        </group>
+                    </xpath>
+                    <xpath expr="//group[@name='general']" position="after">
+                        <group>
+                            <field name="landed_cost"/>
+                     <!--   <field name="landed_cost_cn"/>-->
+                        </group>
+                    </xpath>
+
+                    <xpath expr="//group[@name='weight']" position="replace">
+                        <group name="weight" string="Weights" attrs="{'invisible':[('type','=','service')]}">
+                            <field digits="(14, 5)" name="volume"/>
+                            <field digits="(14, 5)" name="weight"/>
+                            <field digits="(14, 5)" name="weight_net"/>
+                        </group>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+
+<!--    Herencia de vista en tree del listado de productos  -->
+        <record id="view_product_tree_inherit" model="ir.ui.view">
+            <field name="name">product.view.tree.inh</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='name']" position="before">
+                        <field name="default_code" string="Referencia"/>
+                    </xpath>
+                    <xpath expr="//field[@name='type']" position="replace">
+                    </xpath>
+                    <xpath expr="//field[@name='state']" position="replace">
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+<!--  <<<<<<<<<<<<<<<<< vista en search heredada de la vista  de productos >>>>>>>>>>>>>>   -->
+       <record id="inherit_product_search_form_view" model="ir.ui.view">
+        <field name="name">inherit.product.search.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="name"]' position='after'>
+                <field name="default_code"/>
+            </xpath>
+        </field>
+    </record>
+
+
+<!--  <<<<<<<<<<<<<<<<< vista en search heredada de la vista  de productos >>>>>>>>>>>>>>   -->
+       <record id="inherit_product_search_form_view" model="ir.ui.view">
+        <field name="name">inherit.product.search.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="name"]' position='after'>
+                <field name="default_code"/>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>
