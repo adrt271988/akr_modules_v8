@@ -50,5 +50,16 @@
             </xpath>
         </field>
     </record>
+    
+    <record id="akr_account_invoice_ext_view_supp_form_loc_ve" model="ir.ui.view">
+        <field name="name">akr.account.invoice.ext.view.supp.form.loc.ve</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="l10n_ve_fiscal_requirements.account_invoice_ext_view_supp_form_loc_ve"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_document']" position="replace">
+                <field name="date_document" nolabel="1" required="1" attrs="{'readonly': [('state','=','open')]}"/>
+            </xpath>
+        </field>
+    </record>
 </data>
 </openerp>
