@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <report id="l10n_ve_withholding_iva.withholding_vat" 
+                model="account.wh.iva" 
+                name="account.wh.iva" 
+                rml="herrera_withholding/report/withholding_vat_report.rml" 
+                string="Voucher VAT Withholding" 
+                auto="True" 
+                header="True" 
+                menu="True"/>
+                
+    </data>
+</openerp>
