@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record id="akr_view_islr_wh_doc_invoices_tree" model="ir.ui.view">
+            <field name="name">akr.view.islr.wh.doc.invoices.tree</field>
+            <field name="model">islr.wh.doc.invoices</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_islr.view_islr_wh_doc_invoices_tree_"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='invoice_id']" position="replace">
+                    <field name="supplier_invoice_number" string="Factura de Proveedor"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="akr_view_wh_islr_form_suppliers" model="ir.ui.view">
+            <field name="name">akr.view.wh.islr.form.suppliers</field>
+            <field name="model">islr.wh.doc</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_islr.view_wh_islr_form_suppliers"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field/tree/field[@name='invoice_id']" position="replace">
+                    <field name="supplier_invoice_number"/>
+                </xpath>
+                <xpath expr="/form/notebook/page/field/tree/field[@name='raw_base_ut']" position="before">
+                    <field name="amount_without_withholding"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

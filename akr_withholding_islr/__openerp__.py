@@ -33,6 +33,7 @@ Retenciones ISLR AKR Venezuela
     'website': '',
     'depends': ['l10n_ve_withholding_islr'],
     'data': [
+            'islr_wh_doc_view.xml',
     ],
     'demo': [],
     'test': [],
