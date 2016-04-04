@@ -3,14 +3,6 @@
 #    Module Writen to OpenERP, Open Source Management Solution
 #    Copyright (C) OpenERP Venezuela (<http://openerp.com.ve>).
 #    All Rights Reserved
-# Credits######################################################
-#    Coded by: Humberto Arocha           <hbto@vauxoo.com>
-#              Maria Gabriela Quilarque  <gabriela@vauxoo.com>
-#              Javier Duran              <javier@vauxoo.com>
-#              Yanina Aular              <yanina.aular@vauxoo.com>
-#    Planified by: Nhomar Hernandez <nhomar@vauxoo.com>
-#    Finance by: Helados Gilda, C.A. http://heladosgilda.com.ve
-#    Audited by: Humberto Arocha hbto@vauxoo.com
 #############################################################################
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published

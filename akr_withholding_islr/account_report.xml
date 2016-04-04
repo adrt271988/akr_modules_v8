@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="akr_islr_wh_doc_report"
+            model="islr.wh.doc"
+            string="Comprobante de Retención"
+            report_type="qweb-pdf"
+            name="akr_withholding_islr.islr_wh_doc_report"
+            file="akr_withholding_islr.islr_wh_doc_report"
+        />
+
+        <record id="paperformat_landscape_islr" model="report.paperformat">
+            <field name="name">Landscape ISLR</field>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+
+         <record id="akr_islr_wh_doc_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_landscape_islr"/>
+        </record>
+    </data>
+</openerp>

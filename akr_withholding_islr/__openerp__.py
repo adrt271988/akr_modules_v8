@@ -31,9 +31,11 @@ Retenciones ISLR AKR Venezuela
     """,
     'author': 'Alexander Rodriguez <adrt271988@gmail.com>',
     'website': '',
-    'depends': ['l10n_ve_withholding_islr'],
+    'depends': ['l10n_ve_withholding_islr','report'],
     'data': [
             'islr_wh_doc_view.xml',
+            'report/islr_wh_doc_report.xml',
+            'account_report.xml',
     ],
     'demo': [],
     'test': [],
