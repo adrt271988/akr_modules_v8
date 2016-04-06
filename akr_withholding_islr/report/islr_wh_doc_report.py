@@ -35,6 +35,7 @@ class report_islr_wh_doc(report_sxw.rml_parse):
             'get_fiscalyear': self._get_fiscalperiod,
             'split_string': self._split_string,
             'get_address': self._get_address,
+            'get_doc_type': self._get_doc_type
         })
         self.context = context
 
@@ -47,6 +48,16 @@ class report_islr_wh_doc(report_sxw.rml_parse):
             if flag == "m":
                 res = date.month
         return res
+    
+    def _get_doc_type(self, invoice_id):
+        doc_type = ""
+        if invoice_id.type == "in_refund":
+            doc_type = "N.C."
+        if invoice_id.type == "in_invoice" and invoice_id.parent_id:
+            doc_type = "N.D."
+        if invoice_id.type == "in_invoice" and not invoice_id.parent_id:
+            doc_type = "F"
+        return doc_type
 
     def _split_string(self, string, from_position):
         return string and string[from_position:] or ""
