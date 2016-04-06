@@ -5,23 +5,37 @@
 <!--
     <t t-call="report.external_layout">
 -->
-        <div class="page" style="font-size:10px;">
-    
-            <h3 align="center"><strong>COMPROBANTE DE RETENCIÓN DE IMPUESTO SOBRE LA RENTA</strong></h3>
-            <h4 align="center"><u>Efectuada según Decreto 1808</u></h4>
-            <div class="row mt32 mb32">
+        <div class="page" style="font-family: Arial, Helvetica, sans-serif;font-size:8px;">
+            <div class="col-xs-3">
+                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                    style="max-height: 100px; max-weight:80px"/>
+                <br/><br/>
+                <div><strong>DATOS DEL AGENTE DE RETENCIÓN</strong></div>
+                <div><span t-field="o.company_id.name"/></div>
+                <div>RIF:&#160;<span t-esc="split_string(o.company_id.vat,2)"/></div>
+                <div><p t-esc="get_address(o.company_id.street,o.company_id.street2,o.company_id.city,o.company_id.state_id.name,o.company_id.country_id.name)"/></div>
+                <br/>
+                <div><strong>DATOS DEL SUJETO RETENIDO</strong></div>
+                <div><span t-field="o.partner_id.name"/></div>
+                <div>RIF:&#160;<span t-esc="split_string(o.partner_id.vat,2)"/></div>
+                <div><p t-esc="get_address(o.partner_id.street,o.partner_id.street2,o.partner_id.city,o.partner_id.state_id.name,o.partner_id.country_id.name)"/></div>
+            </div>
+            <div class="col-xs-9">
+                <h3 align="center"><strong>COMPROBANTE DE RETENCIÓN DE IMPUESTO SOBRE LA RENTA</strong></h3>
+                <h4 align="center"><u>Efectuada según Decreto 1808</u></h4>
+                <br/>
                 <div class="col-xs-4">
-                    <div align="center">Periodo Fiscal:</div>
-                    <div align="center">AÑO:</div>
-                    <div align="center">MES:</div>
+                    <div align="center"><strong>Periodo Fiscal</strong></div>
+                    <div align="center">AÑO:&#160;<span t-esc="get_fiscalyear(o.period_id,'y')"/></div>
+                    <div align="center">MES:&#160;<span t-esc="get_fiscalyear(o.period_id,'m')"/></div>
                 </div>
                 <div class="col-xs-4">
-                    <div align="center">Fecha de Retención</div>
-                    <div align="center">&#160;</div>
+                    <div align="center"><strong>Fecha de Retención</strong></div>
+                    <div align="center"><span t-field="o.date_uid" t-field-options="{&quot;format&quot;: &quot;dd-MM-yyyy&quot;}" /></div>
                 </div>
                 <div class="col-xs-4">
-                    <div align="center">No. de Comprobante:</div>
-                    <div align="center"><span t-field="o.number"/></div>
+                    <div align="center"><strong>No. de Comprobante</strong></div>
+                    <div align="center"><span t-esc="split_string(o.number,-8)"/></div>
                 </div>
             </div>
             <br/>
