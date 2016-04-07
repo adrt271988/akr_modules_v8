@@ -24,6 +24,22 @@ from openerp.addons import decimal_precision as dp
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 
+class AkrIslrRates(osv.osv):
+    _inherit = "islr.rates"
+
+    _columns = {
+        'minimum': fields.float(
+            'Monto Mínimo', required=True,
+            digits_compute=dp.get_precision('Retención ISLR AKR'),
+            help="Monto mínimo, a partir del cual se determinará si usted retuvo"),
+        'subtract': fields.float(
+            'Sustraendo en UT', required=True,
+            digits_compute=dp.get_precision('Retención ISLR AKR'),
+            help="Cantidad a restar del monto total a "
+                 "retener, Monto del porcentaje retenido... Este sustraendo solo se aplica la"
+                 " primera vez que realizas una retención"),
+    }
+
 class AkrIslrWhDocInvoices(osv.osv):
     _inherit = "islr.wh.doc.invoices"
 

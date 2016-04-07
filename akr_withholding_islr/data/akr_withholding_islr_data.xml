@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data noupdate="0">
+        <!-- Decimal Precision -->
+        <record forcecreate="True" id="akr_decimal_withhold_islr" model="decimal.precision">
+            <field name="name">Retención ISLR AKR</field>
+            <field name="digits">6</field>
+        </record>
+    </data>
+</openerp>
