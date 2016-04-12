@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <report 
+            id="akr_report_invoice"
+            model="account.invoice"
+            string="Factura Forma Libre"
+            report_type="qweb-pdf"
+            name="akr_fiscal_requirements.akr_report_invoice"
+            file="akr_fiscal_requirements.akr_report_invoice"
+        />
+</data>
+</openerp>

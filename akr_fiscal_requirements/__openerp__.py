@@ -35,6 +35,7 @@ Requerimientos Fiscales para Venezuela
     'depends': ['l10n_ve_fiscal_requirements','account_invoice_shipping_address'],
     'data': [
             'view/report_invoice.xml',
+            'account_report.xml',
             'account_invoice_view.xml',
     ],
     'demo': [],
