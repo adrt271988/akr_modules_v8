@@ -2,7 +2,7 @@
 <openerp>
 <data>
     <report 
-            id="akr_report_invoice"
+            id="akr_report_invoices"
             model="account.invoice"
             string="Factura Forma Libre"
             report_type="qweb-pdf"
