@@ -2,6 +2,22 @@
 <openerp>
     <data>
         <!-- Inherit Withholding Iva Form -->
+<!--
+         <record id="inh_view_purchase_order_form" model="ir.ui.view">
+            <field name="name">inh.purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+-->
+<!--
+                <xpath expr="//field[@name='amount_tax']" position="replace">
+                    <field name="amount_taxe" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                </xpath>
+-->
+<!--
+            </field>
+        </record>
+-->
 
     </data>
 </openerp>

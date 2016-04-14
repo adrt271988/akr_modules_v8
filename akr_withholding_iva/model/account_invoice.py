@@ -88,67 +88,80 @@ class account_invoice(models.Model):
     def action_move_create(self):
         '''Metodo heredado para realizar la creacion del comprobante de retencion del proveedor al validar la factura. '''
         res = super(account_invoice, self).action_move_create()
-        query = ''' select  MAX(number) FROM account_wh_iva '''
-        self._cr.execute(query)
-        val = self._cr.fetchone()
-        value = val and val[0] or datetime.now().strftime('%Y%m')+'0'
-        code = datetime.now().strftime('%Y%m')+str(int(value[6:])+1).zfill(8)
-        account_invoice_tax = self.env['account.invoice.tax']
-        account_wh_iva = self.env['account.wh.iva']
-        wh_iva_val = False
 
-        #validamos que el documento sea factura de compra o N/C-N/D de proveedor y que no posea exclusion de retencion
-        if self.type not in ('out_invoice', 'out_refund')  and self.journal_id.type in ('purchase','purchase_refund','purchase_debit') and not self.vat_apply:
+        apply_wh = False
+        for tax in self.tax_line:
+            if tax.tax_id.ret:
+                apply_wh = True
 
-            if self.consolidate_vat_wh: #Agrupar facturas en un comprobante diario
-                #verificamos si ya existe un comprobante generado para el proveedor con la fecha en curso
-                wh_iva_val = account_wh_iva.search([('partner_id','=',self.partner_id.id),('date_ret','=',datetime.now().strftime('%Y-%m-%d'))])
+        if apply_wh:
+            date_inv = datetime.strptime(self.date_invoice, "%Y-%m-%d")
+            date_doc = datetime.strptime(self.date_document, "%Y-%m-%d")
 
-            if self.tax_line: # verificamos si el documento tiene impuestos
-                base = 0
-                ret = 0
-                for i in self.tax_line:
-                    number = self.nro_ctrl
-                    if not i.tax_id.ret:
-                        base = i.base
-                        ret = i.amount
-                        name = i.name
-                        inv_tax_id = i.id
-                        account = self.type == 'in_invoice' and i.tax_id.wh_vat_collected_account_id.id or self.type == 'in_refund' and i.tax_id.wh_vat_paid_account_id.id or i.tax_id.account_collected_id.id
-                        lines = {
-                                    'inv_tax_id': inv_tax_id,
-                                    'base': base,
-                                    'amount': ret,
-                                  }
-                        details = {
-                                    'name': name,
-                                    'move_id': self.move_id.id,
-                                    'invoice_id': self.id,
-                                    'amount_ret': ret,
-                                    'supplier_invoice_number': number,
-                                    'tax_line': [(0,0,lines)]
-                                  }
-                        vals_wh = {
-                            'partner_id': self.partner_id.id,
-                            'period_id': self.period_id.id,
-                            'journal_id': self.journal_id.id,
-                            'account_id': account,
-                            'fortnight':int(datetime.now().strftime('%d')) >= 15 and 'True' or 'False',
-                            'date_ret':datetime.now().strftime('%Y-%m-%d'),
-                            'number':code,
-                            'name': 'Retencion IVA '+str(self.partner_id.name),
-                            'code': code[6:],
-                            'date':datetime.now().strftime('%Y-%m-%d'),
-                            'amount_base_ret': base,
-                            'type': self.type,
-                            'total_tax_ret': ret,
-                            'wh_lines': [(0,0,details)]
-                            }
+            query = ''' select  MAX(number) FROM account_wh_iva '''
+            self._cr.execute(query)
+            val = self._cr.fetchone()
+            value = val and val[0] or (date_inv.strftime('%Y%m')+'0' or date_doc.strftime('%Y%m')+'0')
+            code = str(date_inv.strftime('%Y%m') or date_doc.strftime('%Y%m'))+str(int(value[6:])+1).zfill(8)
+            account_invoice_tax = self.env['account.invoice.tax']
+            account_wh_iva = self.env['account.wh.iva']
+            wh_iva_val = False
 
-                        if wh_iva_val:
-                            account_wh_iva.wh_iva_val.write({ 'wh_lines': [(0,0,details)] })
-                        else:
-                            account_wh_iva.create(vals_wh)
+            #validamos que el documento sea factura de compra o N/C-N/D de proveedor y que no posea exclusion de retencion
+            if self.type not in ('out_invoice', 'out_refund')  and self.journal_id.type in ('purchase','purchase_refund','purchase_debit') and not self.vat_apply:
+
+                if self.consolidate_vat_wh: #Agrupar facturas en un comprobante diario
+                    #verificamos si ya existe un comprobante generado para el proveedor con la fecha en curso
+                    wh_iva_val = account_wh_iva.search([('partner_id','=',self.partner_id.id),('date_ret','=',datetime.now().strftime('%Y-%m-%d'))])
+
+                if self.tax_line: # verificamos si el documento tiene impuestos
+                    base = 0
+                    ret = 0
+                    for i in self.tax_line:
+                        number = self.nro_ctrl
+                        if not i.tax_id.ret:
+                            base = i.base
+                            ret = i.amount
+                            name = i.name
+                            inv_tax_id = i.id
+                            account = self.type == 'in_invoice' and i.tax_id.wh_vat_collected_account_id.id or self.type == 'in_refund' and i.tax_id.wh_vat_paid_account_id.id or i.tax_id.account_collected_id.id
+                            lines = {
+                                        'inv_tax_id': inv_tax_id,
+                                        'base': base,
+                                        'amount': ret,
+                                      }
+                            details = {
+                                        'name': name,
+                                        'move_id': self.move_id.id,
+                                        'invoice_id': self.id,
+                                        'amount_ret': ret,
+                                        'supplier_invoice_number': number,
+                                        'tax_line': [(0,0,lines)]
+                                      }
+                            vals_wh = {
+                                'partner_id': self.partner_id.id,
+                                'period_id': self.period_id.id,
+                                'journal_id': self.journal_id.id,
+                                'account_id': account,
+                                'fortnight':int(date_inv.strftime('%d') or date_doc.strftime('%d')) >= 15 and 'True' or 'False',
+                                'date_ret': date_inv or date_doc,
+                                'number':code,
+                                'name': 'Retencion IVA '+str(self.partner_id.name),
+                                'code': code[6:],
+                                'date': date_inv or date_doc,
+                                'amount_base_ret': base,
+                                'type': self.type,
+                                'total_tax_ret': ret,
+                                'wh_lines': [(0,0,details)]
+                                }
+
+                            if wh_iva_val:
+                                account_wh_iva.wh_iva_val.write({ 'wh_lines': [(0,0,details)] })
+                            else:
+                                wh_id = account_wh_iva.create(vals_wh)
+                                print '..........',wh_id.id
+                                self.write({'wh_iva_id': wh_id.id })
+                                #self.[id].write({'})
 
 
     @api.multi
