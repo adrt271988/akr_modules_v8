@@ -18,7 +18,7 @@
             <field name="inherit_id" ref="l10n_ve_withholding_islr.view_wh_islr_form_suppliers"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@string='Print Income Withholding']" position="replace">
-                    <button name="%(akr_withholding_islr.akr_islr_wh_doc_report)d" string="Imprimir Comprobante"
+                    <button name="%(akr_withholding_islr.akr_islr_wh_doc_report)d" string="Imprimir Comprobante Retención"
                         states="done" colspan="3" type="action" icon="gtk-execute"/>
                 </xpath>
                 <xpath expr="/form/notebook/page/field/tree/field[@name='invoice_id']" position="replace">
