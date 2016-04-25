@@ -2,20 +2,20 @@
 <openerp>
 <data>
 <template id="islr_wh_doc_report_document">
-    <div class="page" style="font-family: Arial, Helvetica, sans-serif;font-size:8px;">
+    <div class="page" style="font-family: Arial, Helvetica, sans-serif;font-size:10px;">
         <div class="col-xs-3">
             <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
                 style="max-height: 100px; max-weight:80px"/>
             <br/><br/>
             <div><strong>DATOS DEL AGENTE DE RETENCIÓN</strong></div>
-            <div><span t-field="o.company_id.name"/></div>
-            <div>RIF:&#160;<span t-esc="split_string(o.company_id.vat,2)"/></div>
-            <div><p t-esc="get_address(o.company_id.street,o.company_id.street2,o.company_id.city,o.company_id.state_id.name,o.company_id.country_id.name)"/></div>
+            <div><strong>Razón Social:</strong>&#160;<span t-field="o.company_id.name"/></div>
+            <div><strong>Registro Único de Información Fiscal (RIF):</strong>&#160;<span t-esc="split_string(o.company_id.vat,2)"/></div>
+            <div><strong>Domicilio Fiscal:</strong>&#160;<p t-esc="get_address(o.company_id.street,o.company_id.street2,o.company_id.city,o.company_id.state_id.name,o.company_id.country_id.name)"/></div>
             <br/>
             <div><strong>DATOS DEL SUJETO RETENIDO</strong></div>
-            <div><span t-field="o.partner_id.name"/></div>
-            <div>RIF:&#160;<span t-esc="split_string(o.partner_id.vat,2)"/></div>
-            <div><p t-esc="get_address(o.partner_id.street,o.partner_id.street2,o.partner_id.city,o.partner_id.state_id.name,o.partner_id.country_id.name)"/></div>
+            <div><strong>Razón Social:</strong>&#160;<span t-field="o.partner_id.name"/></div>
+            <div><strong>Registro Único de Información Fiscal (RIF):</strong>&#160;<span t-esc="split_string(o.partner_id.vat,2)"/></div>
+            <div><strong>Domicilio Fiscal:</strong>&#160;<p t-esc="get_address(o.partner_id.street,o.partner_id.street2,o.partner_id.city,o.partner_id.state_id.name,o.partner_id.country_id.name)"/></div>
         </div>
         <div class="col-xs-9">
             <h3 align="center"><strong>COMPROBANTE DE RETENCIÓN DE IMPUESTO SOBRE LA RENTA</strong></h3>
@@ -39,12 +39,13 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>No.</th>
                     <th>Fecha Documento</th>
                     <th>Número Documento</th>
                     <th>Número de Control</th>
                     <th>Tipo Doc.</th>
                     <th>Concepto</th>
-                    <th class="text-right">Monto Documento</th>
+                    <th class="text-right">Total con IVA incluido</th>
                     <th class="text-right">Monto Objeto de Retención</th>
                     <th class="text-right">Monto Exento</th>
                     <th class="text-right">% Retención</th>
@@ -53,6 +54,7 @@
             </thead>
             <tbody>
                 <tr t-foreach="o.concept_ids" t-as="c">
+                    <td><span t-esc="c_index+1"/></td>
                     <td><span t-field="c.invoice_id.date_document" t-field-options="{&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/></td>
                     <td><span t-field="c.invoice_id.supplier_invoice_number"/></td>
                     <td><span t-field="c.invoice_id.nro_ctrl"/></td>
@@ -67,11 +69,12 @@
                 </tr>
             </tbody>
         </table>
-        <div style="position:absolute;left:50px;top:500px;width:25%;float:left">
+        <div style="position:absolute;left:50px;top:560px;width:25%;float:left">
             <span>_________________________________________________________</span>
             <br/>
             <br/>
             <p align="center">FIRMA Y SELLO DEL AGENTE DE RETENCIÓN</p>
+            <p align="center">Enviado a: <span t-field="o.partner_id.email"></span></p>
         </div>
     </div>
 </template>

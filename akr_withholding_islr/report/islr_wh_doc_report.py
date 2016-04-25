@@ -46,7 +46,11 @@ class report_islr_wh_doc(report_sxw.rml_parse):
             if flag == "y":
                 res = date.year
             if flag == "m":
-                res = date.month
+                month = date.month
+                if month < 10:
+                    res = str(0)+str(month)
+                else:
+                    res = str(month)
         return res
     
     def _get_doc_type(self, invoice_id):
