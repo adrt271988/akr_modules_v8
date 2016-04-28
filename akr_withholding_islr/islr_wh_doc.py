@@ -210,3 +210,17 @@ class AkrIslrWhDocLine(osv.osv):
                                         store=True, string='Factura de Proveedor', help="Factura de Proveedor"),
     }
 
+class AkrIslrWhDoc(osv.osv):
+    _inherit = "islr.wh.doc"
+
+    def _get_short_number(self, cr, uid, ids, fieldname, args, context=None):
+        res = {}
+        for iwd_brw in self.browse(cr, uid, ids, context):
+            res[iwd_brw.id] = iwd_brw.number and iwd_brw.number[8:] or ''
+        return res
+    
+    _columns = {
+            'short_number': fields.function(_get_short_number, type='char',
+                                        store=True, string='Número de Comprobante', help="Referencia de Comprobante"),
+    }
+

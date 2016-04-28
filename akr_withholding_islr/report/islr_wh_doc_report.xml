@@ -45,7 +45,6 @@
                     <th>Número de Control</th>
                     <th>Tipo Doc.</th>
                     <th>Concepto</th>
-                    <th class="text-right">Total con IVA incluido</th>
                     <th class="text-right">Monto Objeto de Retención</th>
                     <th class="text-right">Monto Exento</th>
                     <th class="text-right">% Retención</th>
@@ -58,18 +57,17 @@
                 <t t-set="total_wo_withholding" t-value="0.00"/>
                 <t t-set="total_amount" t-value="0.00"/>
                 <tr t-foreach="o.concept_ids" t-as="c">
+                    <t t-set="total_invoices" t-value="total_invoices+c.invoice_id.amount_total"/>
                     <td><span t-esc="c_index+1"/></td>
                     <td><span t-field="c.invoice_id.date_document" t-field-options="{&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/></td>
                     <td><span t-field="c.invoice_id.supplier_invoice_number"/></td>
                     <td><span t-field="c.invoice_id.nro_ctrl"/></td>
                     <td><span t-esc="get_doc_type(c.invoice_id)"/></td>
                     <td><span t-field="c.concept_id.name"/></td>
-                    <td class="text-right"><span t-field="c.invoice_id.amount_total"/> <t t-set="total_invoices" t-value="total_invoices+c.invoice_id.amount_total"/></td>
                     <td class="text-right"><span t-field="c.base_amount"/><t t-set="total_base" t-value="total_base+c.base_amount"/></td>
                     <td class="text-right"><span t-field="c.amount_without_withholding"/><t t-set="total_wo_withholding" t-value="total_wo_withholding+c.amount_without_withholding"/></td>
                     <td class="text-right"><span t-field="c.retencion_islr"/>%</td>
                     <td class="text-right"><span t-field="c.amount"/><t t-set="total_amount" t-value="total_amount+c.amount"/></td>
-                    <!--t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>-->
                 </tr>
                 <tr>
                     <td></td>
@@ -78,7 +76,6 @@
                     <td></td>
                     <td></td>
                     <td class="text-right"><strong>Total:</strong></td>
-                    <td class="text-right"><span t-raw="formatLang(total_invoices)"/></td>
                     <td class="text-right"><span t-raw="formatLang(total_base)"/></td>
                     <td class="text-right"><span t-raw="formatLang(total_wo_withholding)"/></td>
                     <td></td>
@@ -86,13 +83,40 @@
                 </tr>
             </tbody>
         </table>
-        <div style="position:absolute;left:50px;top:560px;width:25%;float:left">
-            <span>_________________________________________________________</span>
-            <br/>
-            <br/>
-            <p align="center">FIRMA Y SELLO DEL AGENTE DE RETENCIÓN</p>
-            <p align="center">Enviado a: <span t-field="o.partner_id.email"></span></p>
+        <br/>
+        <br/>
+        <br/>
+        <div style="position:absolute;">
+            <div style="width:25%;float:left">
+                <span>_________________________________________________________</span>
+                <br/>
+                <br/>
+                <p align="center">FIRMA Y SELLO DEL AGENTE DE RETENCIÓN</p>
+                <p align="center">Enviado a: <span t-field="o.partner_id.email"></span></p>
+            </div>
+            <div style="width:75%;float:right;">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Total Incluyendo IVA</strong></td>
+                            <td class="text-right">
+                                <span t-raw="formatLang(total_invoices)"/>
+                            </td>
+                        </tr>
+                        <tr class="border-black">
+                            <td><strong>Total a pagar</strong></td>
+                            <td class="text-right">
+                                 <span t-raw="formatLang(total_invoices + total_amount)" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
+        
+        
+<!--<div style="position:absolute;left:50px;top:560px;width:25%;float:left">-->
+        
     </div>
 </template>
 

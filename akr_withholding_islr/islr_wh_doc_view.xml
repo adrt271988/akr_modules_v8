@@ -29,5 +29,27 @@
                 </xpath>
             </field>
         </record>
+        
+        <record id="akr_view_wh_islr_tree_suppliers" model="ir.ui.view">
+            <field name="name">akr.view.wh.islr.tree.suppliers</field>
+            <field name="model">islr.wh.doc</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_islr.view_wh_islr_tree_suppliers"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number']" position="replace">
+                    <field name="short_number"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="akr_view_account_invoice_form_concept_islr" model="ir.ui.view">
+            <field name="name">akr.view.account.invoice.form.concept.islr</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_islr.view_account_invoice_form_concept_islr"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='concept_id']" position="replace">
+                    <field name="concept_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>
