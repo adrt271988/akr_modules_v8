@@ -51,5 +51,16 @@
                 </xpath>
             </field>
         </record>
+        
+        <record id="akr_view_account_invoice_form_concept_islr_customer" model="ir.ui.view">
+            <field name="name">akr.view.account.invoice.form.concept.islr.customer</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_islr.view_account_invoice_form_concept_islr_customer"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='concept_id']" position="replace">
+                    <field name="concept_id"/>
+                </xpath>
+            </field>
+        </record>
     </data>
 </openerp>

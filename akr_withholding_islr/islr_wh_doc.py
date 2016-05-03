@@ -237,3 +237,66 @@ class AkrAccountInvoiceRefund(osv.osv):
                        validated.
         """
         return True
+
+class AkrAccountInvoice(osv.osv):
+
+    _inherit = "account.invoice"
+    
+    def _create_islr_wh_doc(self, cr, uid, ids, context=None):
+        """
+            Función sobreescrita de modulo l10n_ve_withholding_islr
+        """
+        print 'SOBREESCRIBIENDO!!!!!!!!!!!!!'
+        context = dict(context or {})
+        ids = isinstance(ids, (int, long)) and [ids] or ids
+
+        wh_doc_obj = self.pool.get('islr.wh.doc')
+        rp_obj = self.pool.get('res.partner')
+
+        row = self.browse(cr, uid, ids[0], context=context)
+        acc_part_id = rp_obj._find_accounting_partner(row.partner_id)
+
+        res = False
+        if row.type in ('out_invoice', 'out_refund'):
+            return False
+        if row.type in ('in_invoice', 'in_refund') and \
+                rp_obj._find_accounting_partner(
+                    row.company_id.partner_id).islr_withholding_agent:
+            res = True
+
+        if not res:
+            return True
+
+        context['type'] = row.type
+        wh_ret_code = wh_doc_obj.retencion_seq_get(cr, uid)
+
+        if wh_ret_code:
+            journal = wh_doc_obj._get_journal(cr, uid, context=context)
+            values = {
+                'name': wh_ret_code,
+                'partner_id': acc_part_id.id,
+                'period_id': row.period_id.id,
+                'account_id': row.account_id.id,
+                'type': row.type,
+                'journal_id': journal,
+                'date_uid': row.date_invoice,
+            }
+            if row.company_id.propagate_invoice_date_to_income_withholding:
+                values['date_uid'] = row.date_invoice
+
+            islr_wh_doc_id = wh_doc_obj.create(cr, uid, values,
+                                               context=context)
+            self._create_doc_invoices(cr, uid, row.id, islr_wh_doc_id)
+
+            self.pool.get('islr.wh.doc').compute_amount_wh(cr, uid,
+                                                           [islr_wh_doc_id],
+                                                           context=context)
+            if row.company_id.automatic_income_wh is True:
+                wh_doc_obj.write(cr, uid, islr_wh_doc_id,
+                                 {'automatic_income_wh': True},
+                                 context=context)
+        else:
+            raise osv.except_osv(_('Invalid action !'), _(
+                "No se ha encontrado el numero de secuencia!"))
+
+        return islr_wh_doc_id
