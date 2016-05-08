@@ -246,7 +246,6 @@ class AkrAccountInvoice(osv.osv):
         """
             Función sobreescrita de modulo l10n_ve_withholding_islr
         """
-        print 'SOBREESCRIBIENDO!!!!!!!!!!!!!'
         context = dict(context or {})
         ids = isinstance(ids, (int, long)) and [ids] or ids
 
@@ -259,7 +258,14 @@ class AkrAccountInvoice(osv.osv):
         res = False
         if row.type in ('out_invoice', 'out_refund'):
             return False
-        if row.type in ('in_invoice', 'in_refund') and \
+        if row.type == "in_refund" and \
+                rp_obj._find_accounting_partner(
+                    row.company_id.partner_id).islr_withholding_agent:
+            if row.parent_id and row.parent_id.islr_wh_doc_id:
+                islr_doc_id = row.parent_id.islr_wh_doc_id.id
+                self._create_doc_invoices(cr, uid, row.id, islr_doc_id)
+                wh_doc_obj.compute_amount_wh(cr, uid,[islr_doc_id],context=context)
+        if row.type == 'in_invoice' and \
                 rp_obj._find_accounting_partner(
                     row.company_id.partner_id).islr_withholding_agent:
             res = True
