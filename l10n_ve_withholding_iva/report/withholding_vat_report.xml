@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--Custom report.-->
+
+<openerp>
+<data>
+<template id="report_wh_iva">
+<!--
+    <t t-call="report.external_layout">
+-->
+<div class="page">
+    <table style="width:100%; border:1px solid #000000;" >
+        <tr>
+            <th style="width:20%;"> <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo"
+                style="max-height: 100px; max-weight:80px"/></th>
+            <th>
+            <table style="width:100%; border:1px solid #000000;">
+                <tr>
+                    <th style="font-size:16px;text-align:center;" > COMPROBANTE DE RETENCION DEL IMPUESTO AL VALOR AGREGADO</th>
+                </tr>
+                 <tr>
+                    <th style="font-size:9px;text-align:center;" > LEY IVA – ART. 11: “SERAN RESPONSABLES DEL PAGO DE IMPUESTO EN CALIDAD DE AGENTES DE RETENCION, LOS COMPRADORES O ADQUIRIENTES DE DETERMINADOS BIENES MUEBLES Y LOS RECEPTORES DE CIERTOS SERVICIOS A QUIENES LA ADMINISTRACION TRIBUTARIA DESIGNE COMO TAL " </th>
+                </tr>
+         <br/>
+            </table>
+
+            <table style="margin:0px;width:100%; border:1px solid #000000;">
+                <tr>
+                    <th style="width:35%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;text-align:center;"><div align="center">N° DE COMPROBANTE</div></th>
+                    <th style="width:35%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;text-align:center;"><div align="center">FECHA</div></th>
+                    <th style="width:30%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;text-align:center;"><div align="center">PERIODO FISCAL</div></th>
+                </tr>
+                <tr style="border-top:1px solid #000000;">
+                    <th style="border-right:1px solid #000000;"><div align="center"><span t-field="o.number"/></div></th>
+                   <th style="border-right:1px solid #000000;" ><div align="center"><span t-field="o.date"/></div></th>
+                   <th style="border-right:1px solid #000000;"><div align="center">
+                  <div align="center">AÑO:&#160;<span t-esc="get_fiscalyear(o.period_id,'y')"/> / MES:&#160;<span t-esc="get_fiscalyear(o.period_id,'m')"/></div>
+
+                   </div></th>
+                </tr>
+            </table>
+            </th>
+        </tr>
+    </table>
+    <br/>
+    <table style="width:100%; border:1px solid #000000;">
+        <thead>
+            <tr>
+                <th style="text-align:center;font-size:16px;"><strong>DATOS DEL AGENTE DE RETENCION</strong></th>
+            </tr>
+        </thead>
+    </table>
+    <table style="width:100%; border:1px solid #000000;">
+        <tr>
+            <th style="width:30%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;"><div align="center">NOMBRE O RAZON SOCIAL</div></th>
+            <th style="width:30%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;"><div align="center">RIF</div></th>
+            <th style="width:40%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;"><div align="center">DIRECCION FISCAL</div></th>
+        </tr>
+        <tr style="border-top:1px solid #000000;">
+            <th style="border-right:1px solid #000000;font-size:12px;"><div align="center"><span t-field="o.company_id.name"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:12px;"><div align="center"><p t-esc="get_rif(o.company_id.vat)"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:12px;"><div align="center"><div><p t-esc="get_address(o.company_id.street,o.company_id.street2,o.company_id.city,o.company_id.state_id.name,o.company_id.country_id.name)"/></div></div>
+            </th>
+        </tr>
+    </table>
+    <br/>
+    <table style="width:100%; border:1px solid #000000;">
+        <tr>
+            <th style="font-size:16px;"> <div align="center"><strong>DATOS DEL SUJETO DE RETENCION</strong></div></th>
+        </tr>
+    </table>
+    <table style="width:100%; border:1px solid #000000;">
+        <tr >
+            <th style="width:30%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;"><div align="center">NOMBRE O RAZON SOCIAL</div></th>
+            <th style="width:30%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;"><div align="center">RIF</div></th>
+            <th style="width:40%;border-right:1px solid #000000;font-size:14px;background-color:#CECECE;"><div align="center">DIRECCION FISCAL</div></th>
+        </tr>
+        <tr style="border-top:1px solid #000000;">
+            <th style="border-right:1px solid #000000;font-size:12px;text-align:center;"><span t-field="o.partner_id.name"/></th>
+            <th style="border-right:1px solid #000000;font-size:12px;text-align:center;"><span t-esc="get_rif(o.partner_id.vat)"/></th>
+            <th style="border-right:1px solid #000000;font-size:12px;text-align:center;"><p t-esc="get_address(o.partner_id.street,o.partner_id.street2,o.partner_id.city,o.partner_id.state_id.name,o.partner_id.country_id.name)"/></th>
+        </tr>
+    </table>
+    <br/>
+    <table style="width:100%; border:1px solid #000000;">
+        <tr >
+            <th style="width:6%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Fecha Factura</div></th>
+            <th style="width:7%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Nro de Factura</div></th>
+            <th style="width:7%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Nro de Control</div></th>
+            <th style="width:7%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Nro Nota Crédito</div></th>
+            <th style="width:7%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Nro Nota Débito</div></th>
+
+            <th style="width:8%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Nro Factura Afectada</div></th>
+            <th style="width:8%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Total Compras Incluye IVA</div></th>
+            <th style="width:8%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Compras sin Derecho a IVA</div></th>
+            <th style="width:7%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Base Imponible</div></th>
+            <th style="width:5%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">% Alicuota</div></th>
+            <th style="width:7%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">Impuesto IVA</div></th>
+            <th style="width:6%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">% Retención</div></th>
+            <th style="width:9%;border-right:1px solid #000000;font-size:12px;background-color:#CECECE;" align="center"><div align="center">IVA Retenido</div></th>
+        </tr>
+        <tr style="border-top:1px solid #000000;" t-foreach="o.wh_lines" t-as="l">
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-field="l.date"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-field="l.supplier_invoice_number"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-field="l.invoice_id.nro_ctrl"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-if="l.invoice_id.type == 'in_refund'"><span t-field="l.invoice_id.number"/></span></div></th><!--debito out refound -->
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-if="l.invoice_id.type == 'out_refund'"><span t-field="l.invoice_id.number"/></span></div></th><!--credito in refound -->
+
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-if="(l.invoice_id.type == 'in_refund' or l.invoice_id.type == 'out_refund')"><span t-field="l.supplier_invoice_number"/></span></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="right"><span t-field="l.invoice_id.amount_total"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-if="l.invoice_id.amount_tax == 0 or l.invoice_id.amount_tax == ''"><span t-field="l.invoice_id.amount_total"/></span></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="right"><span t-field="l.invoice_id.amount_untaxed"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-esc="get_iva(l.invoice_id.id)"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="right"><span t-field="l.invoice_id.amount_tax"/></div></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"><div align="center"><span t-field="l.invoice_id.partner_id.wh_iva_rate"/></div></th>
+            <th style="border-right:1px "><div align="right"><span t-field="l.amount_tax_ret"/></div></th>
+        </tr>
+            <t t-set='val' t-value='0' />
+            <p t-foreach="o.wh_lines" t-as='i'>
+            <t t-set='val' t-value="val+(i.amount_tax_ret)"/></p>
+        <tr style="border-top:1px solid #000000;" >
+            <th ></th>
+            <th ></th>
+            <th ></th>
+
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th style="border-right:1px solid #000000;font-size:10px;"></th>
+            <th style="font-size:12px;text-align:center;">TOTAL</th>
+            <th style="font-size:12px;">IMPUESTO</th>
+            <th style="font-size:12px;">RETENIDO</th>
+            <td style="border-left:1px solid #000000;" class="text-right"><strong><t t-esc="get_formato(val)"/></strong></td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+     <br/>
+    <br/>
+    <br/>
+    <table style="width:100%;" align='center'>
+         <tr>
+            <th class="text-center" ></th>
+            <th  class="text-center">Sujeto de Retencion</th>
+        </tr>
+       <tr>
+            <th style="width:50%;" class="text-center"> <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo"
+                style="max-height: 120px; max-weight:90px"/></th>
+
+            <th class="text-center" style="width:50%;">
+                <table style="width:100%;" align='center'>
+
+                     <tr>
+
+                        <th  class="text-center"><span t-field="o.partner_id.name"/></th>
+
+                    </tr>
+                     <tr>
+
+                        <th  class="text-center"><span t-esc="get_rif(o.partner_id.vat)"/></th>
+
+                    </tr>
+                   <tr>
+
+                      <th  class="text-center">Fecha de Entrega:<span t-esc="time.strftime('%d/%m/%Y')"/></th>
+
+                    </tr>
+                     <tr>
+
+                      <th  class="text-center">Entregado a:<span t-field="o.partner_id.email"/></th>
+
+                    </tr>
+                </table>
+            </th>
+        </tr>
+
+    </table>
+    <br></br> <br></br>
+</div>
+</template>
+
+<template id="withholding_vat_report">
+    <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+            <t t-raw="translate_doc(doc_id, doc_model, 'partner_id.lang', 'l10n_ve_withholding_iva.report_wh_iva')"/>
+        </t>
+    </t>
+</template>
+</data>
+</openerp>

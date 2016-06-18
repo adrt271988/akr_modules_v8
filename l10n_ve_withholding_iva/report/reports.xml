@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+
+        <report
+            id="withholding_iva"
+            model="account.wh.iva"
+            string="Comprobante de Retención"
+            report_type="qweb-pdf"
+            name="l10n_ve_withholding_iva.withholding_vat_report"
+            attachment_use="False"
+            file="l10n_ve_withholding_iva.withholding_vat_report"
+        />
+<!--
+        <report
+            id="list_report_wh_vat"
+            menu="True"
+            model="txt.iva"
+            name="list_report_wh_vat2"
+            rml="l10n_ve_withholding_iva/report/list_wh_iva_report.rml"
+            string="Retenciones IVA"
+            auto="True"
+            header="False"
+        />
+-->
+
+    <!-- Formato de Página Horizontal para comprobante de retención de IVA -->
+        <record id="paperformat_landscape_iva" model="report.paperformat">
+            <field name="name">Landscape IVA</field>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">8</field>
+            <field name="dpi">90</field>
+        </record>
+
+         <record id="withholding_iva" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_landscape_iva"/>
+        </record>
+
+    </data>
+</openerp>
