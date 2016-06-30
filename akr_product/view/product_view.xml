@@ -51,9 +51,9 @@
                     <xpath expr="//field[@name='name']" position="before">
                         <field name="default_code" string="Referencia"/>
                     </xpath>
-                    <xpath expr="//field[@name='type']" position="replace">
-                    </xpath>
+                    <xpath expr="//field[@name='type']" position="replace"/>
                     <xpath expr="//field[@name='state']" position="replace">
+                        <field name="state" invisible="1"/>
                     </xpath>
                 </data>
             </field>

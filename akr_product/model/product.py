@@ -39,13 +39,11 @@ class product_template(osv.osv):
     _inherit = 'product.template'
 
     # precarga valores por defecto
-    #~ def default_get(self, cr, uid, fields_list, context=None):
-        #~ context = context and context or {}
-        #~ res = super(product_template, self).default_get(cr, uid, fields_list, context)
-        #~ account = self.pool.get('account.account').search(cr, uid, [('code', '=', '151.01')])
-        #~ account_id = account and account[0] or ''
-        #~ res.update({'valuation':'real_time','property_stock_account_input': account_id,'property_stock_account_output': account_id })
-        #~ return res
+    def default_get(self, cr, uid, fields_list, context=None):
+        context = context and context or {}
+        res = super(product_template, self).default_get(cr, uid, fields_list, context)
+        res.update({'valuation':'real_time','cost_method': 'real'})
+        return res
 
     def _product_reserved(self, cr, uid, ids, field_names=None, arg=False, context=None):
         context = context or {}
@@ -62,7 +60,7 @@ class product_template(osv.osv):
         #'landed_cost_cn': fields.float('Landed Cost CN', digits_compute=dp.get_precision('Product Price')),
    }
     _defaults = {
-        'valuation': 'real_time',
+        'type': 'product',
             }
 
 product_template()
@@ -74,6 +72,7 @@ class product_product(osv.osv):
                         ('default_code_uniq', 'unique(default_code)', 'Internal Reference must be unique per product!'),
                         ('default_ean13_bar', 'unique(ean13)', 'EAN13 Barcode must be unique per product!'),
                         ]
+    
 
 product_product()
 
