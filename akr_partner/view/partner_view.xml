@@ -9,11 +9,12 @@
 
 
                 <xpath expr="//field[@name='parent_id']" position="before">
+                    <field name="partner_type" required="1"/>
                     <label for="vat" string="RIF"/>
                     <div name="vat_info">
-                        <field name="vat" required="1" on_change="vat_change(vat)" placeholder="Ejm. VEJ301935167" class="oe_inline"/>
+                        <field name="vat" placeholder="Ejm. VEJ301935167"
+                            class="oe_inline" attrs="{'required':[('partner_type','not in',['NN','JN'])]}"/>
                         <button colspan="2" name="button_check_vat" string="Validar RIF" type="object" icon="gtk-execute" class="oe_inline"/>
-                        <field name="partner_type" on_change="type_change(partner_type)" attrs="{'required':[('validated','=',True)]}"/>
                         <field name="validated" invisible="1"/>
                     </div>
                 </xpath>
@@ -36,6 +37,13 @@
                 <xpath expr="//field[@name='country_id']" position="replace">
                          <field name="country_id"  placeholder="Country" class="oe_no_button" options="{&quot;no_open&quot;: True}" attrs="{'readonly': [('use_parent_address','=',True)],'required':[('customer','=',True),('validated','=',True)]}"/>
                 </xpath>
+                <xpath expr="//field[@name='property_account_receivable']" position="replace">
+                         <field name="property_account_receivable" attrs="{'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='property_account_payable']" position="replace">
+                         <field name="property_account_payable" attrs="{'required':[('customer','=',True),('validated','=',True)]}"/>
+                </xpath>
+    
 
             </field>
         </record>

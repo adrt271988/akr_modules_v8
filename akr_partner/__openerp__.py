@@ -32,7 +32,8 @@
                    """,
     "depends" : [
                 "base",
-                "sale"
+                "sale",
+                "l10n_ve_fiscal_requirements",
                 ],
     'data': [
         "view/partner_view.xml"
