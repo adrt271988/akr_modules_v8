@@ -38,12 +38,10 @@ class account_invoice_inh(models.Model):
 
     @api.multi
     def _get_order_origin(self):
+        ctx = self._context
         for invoice in self:
-            if invoice.origin and 'OUT' in invoice.origin:
-                val = self.env['stock.picking'].search([('name', '=', invoice.origin)], limit=1)
-                invoice.order_origin = val.origin
-            else:
-                invoice.order_origin = invoice.origin
+            val = self.env['stock.picking'].search([('name', '=', invoice.origin)], limit=1)
+            invoice.order_origin = val.origin
     
     order_origin = fields.Char(compute='_get_order_origin', string='Orden')
 

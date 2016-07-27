@@ -12,11 +12,28 @@
                     <attribute name="create">false</attribute>
                 </xpath>
                 <!--  <<<<<<<<<<<<<<<<< Reasigna boton "Reintegrar Factura" solo a los managers del sistema >>>>>>>>>>>>>>   -->
-                <xpath expr="//button[@name='217']" position="replace">
-                     <button name="217" type="action" string="Refund Invoice" states="open,proforma2,paid" groups="base.group_erp_manager"/>
+                <xpath expr="//button[@string='Refund Invoice']" position="replace">
+                     <button name="%(account.action_account_invoice_refund)d" type="action" string="Refund Invoice" 
+                        states="open,proforma2,paid" groups="base.group_erp_manager"/>
+                </xpath>
+
+                <xpath expr='//field[@name="origin"]' position='after'>
+                    <field name="order_origin"/>
                 </xpath>
             </field>
         </record>
+
+        <record id="view_invoice_supplier_form_kasa" model="ir.ui.view">
+            <field name="name">view.invoice.supplier.form.kasa</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//field[@name="origin"]' position='after'>
+                    <field name="order_origin"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_account_invoice_customer_inh_voucher" model="ir.ui.view">
             <field name="name">account.invoice.customer.inherit.voucher</field>
             <field name="model">account.invoice</field>

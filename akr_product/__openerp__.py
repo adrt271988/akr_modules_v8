@@ -36,6 +36,7 @@
                 "product"
                 ],
     'data': [
+        #"data/product_data.xml",
         "view/product_view.xml",
         "view/product_package_view.xml"
     ],

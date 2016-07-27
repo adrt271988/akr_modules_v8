@@ -61,7 +61,7 @@ class product_template(osv.osv):
    }
     _defaults = {
         'type': 'product',
-            }
+    }
 
 product_template()
 
