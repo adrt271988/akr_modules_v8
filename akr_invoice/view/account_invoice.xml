@@ -11,6 +11,11 @@
                 <xpath expr='//form[@string="Invoice"]' position='attributes'>
                     <attribute name="create">false</attribute>
                 </xpath>
+
+                <xpath expr='//field[@name="date_invoice"]' position='replace'>
+                    <field name="date_invoice" readonly="1"/>
+                </xpath>
+
                 <!--  <<<<<<<<<<<<<<<<< Reasigna boton "Reintegrar Factura" solo a los managers del sistema >>>>>>>>>>>>>>   -->
                 <xpath expr="//button[@string='Refund Invoice']" position="replace">
                      <button name="%(account.action_account_invoice_refund)d" type="action" string="Refund Invoice" 

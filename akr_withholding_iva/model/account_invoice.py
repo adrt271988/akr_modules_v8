@@ -113,15 +113,18 @@ class account_invoice(models.Model):
                 if self.consolidate_vat_wh: #Agrupar facturas en un comprobante diario
                     #verificamos si ya existe un comprobante generado para el proveedor con la fecha en curso
                     wh_iva_val = account_wh_iva.search([('partner_id','=',self.partner_id.id),('date_ret','=',datetime.now().strftime('%Y-%m-%d'))])
-
                 if self.tax_line: # verificamos si el documento tiene impuestos
                     base = 0
                     ret = 0
                     for i in self.tax_line:
                         number = self.nro_ctrl
-                        if not i.tax_id.ret:
-                            base = i.base
-                            ret = i.amount
+                        #if not i.tax_id.ret:
+                        if i.tax_id.ret:
+                            print '*****',i.name
+                            #base = i.base
+                            base = self.amount_total
+                            #ret = i.amount
+                            ret = i.base
                             name = i.name
                             inv_tax_id = i.id
                             account = self.type == 'in_invoice' and i.tax_id.wh_vat_collected_account_id.id or self.type == 'in_refund' and i.tax_id.wh_vat_paid_account_id.id or i.tax_id.account_collected_id.id

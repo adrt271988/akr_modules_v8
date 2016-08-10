@@ -20,6 +20,11 @@
             <xpath expr="//field[@name='nro_ctrl']" position="replace">
                 <field name="nro_ctrl" required="1"/>
             </xpath>
+            <xpath expr="//field[@name='date_invoice']" position="attributes">
+                <attribute name="readonly">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_document']" position="replace"/>
+            <xpath expr="//label[@string='(Put here the date when Sale Invoice was delivered to customer)']" position="replace"/>
         </field>
     </record>
     
