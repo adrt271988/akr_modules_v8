@@ -76,7 +76,7 @@ class purchase_order(osv.osv):
     _name = "purchase.order"
     _inherit = "purchase.order"
 
-    def _amount_all(self, cr, uid, ids, field_name, arg, context=None):   #This code is not working and ,is this calculation is crct?
+    def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
         ''' Funcion heredada para el recalculo de el monto de impuestos y total, según cambios efectuados
             para la generacion de los comprobantes de retención de IVA.'''
 
@@ -98,6 +98,8 @@ class purchase_order(osv.osv):
                     val += c.get('amount', 0.0)
             res[order.id]['amount_tax']=cur_obj.round(cr, uid, cur, val)
             res[order.id]['amount_total']=res[order.id]['amount_untaxed'] + res[order.id]['amount_tax']
+
+
         return res
 
     def _get_order(self, cr, uid, ids, context=None):

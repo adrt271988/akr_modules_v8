@@ -11,6 +11,9 @@
                 <xpath expr='//field[@name="date"]' position='after'>
                      <field name="date_pay"/>
                 </xpath>
+                <xpath expr='//field[@name="journal_id"]' position='after'>
+                     <field name="pay_method"/>
+                </xpath>
                 <!--  <<<< Sobrescribe etiqueta del campo "Fecha" >>>>   -->
                 <xpath expr='//field[@name="date"]' position="replace">
                       <field name="date" string="Fecha de registro"/>
@@ -28,6 +31,13 @@
                        <field name="amount_wh_iva"/>
                        <field name="amount_wh_islr"/>
                 </xpath>
+                 <!--  <<<<  Agrega el numero de factura   >>>>   -->
+                <xpath expr="//field[@name='line_dr_ids']/tree//field[@name='account_id']" position="after">
+                       <field name="invoice_number"/>
+                </xpath>
+                <xpath expr="//field[@name='line_cr_ids']/tree//field[@name='account_id']" position="after">
+                       <field name="invoice_number"/>
+                </xpath>
             </field>
         </record>
 
@@ -37,7 +47,11 @@
             <field name="model">account.voucher</field>
             <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
             <field name="arch" type="xml">
-                <!--  <<<<    >>>>   -->
+
+                <xpath expr='//field[@name="journal_id"]' position='after'>
+                     <field name="pay_method"/>
+                </xpath>
+                <!--  <<<<  Agrega los montos de Retencion de IVA e ISLR   >>>>   -->
                 <xpath expr="//field[@name='line_dr_ids']/tree//field[@name='amount_original']" position="after">
                        <field name="amount_wh_iva"/>
                        <field name="amount_wh_islr"/>
@@ -53,6 +67,23 @@
                 <xpath expr="//field[@name='line_cr_ids']/tree//field[@name='amount_unreconciled']" position="replace">
                        <field name="amount_unreconciled" string="Saldo pendiente" readonly="1" groups="account.group_account_invoice"/>
                 </xpath>
+                <!--  <<<<  Agrega el numero de factura   >>>>   -->
+                <xpath expr="//field[@name='line_dr_ids']/tree//field[@name='account_id']" position="after">
+                       <field name="invoice_number"/>
+                </xpath>
+                <xpath expr="//field[@name='line_cr_ids']/tree//field[@name='account_id']" position="after">
+                       <field name="invoice_number"/>
+                </xpath>
+
+                <!--  <<<<  Sobrescribe etiqueta de campo Fecha   >>>>   -->
+                <xpath expr="//field[@name='line_dr_ids']/tree//field[@name='date_due']" position="replace">
+                       <field name="date_due" readonly="1" string="Fecha de registro"/>
+                       <field name="date_doc"/>
+                </xpath>
+                <xpath expr="//field[@name='line_cr_ids']/tree//field[@name='date_due']" position="replace">
+                       <field name="date_due" readonly="1" string="Fecha de registro"/>
+                       <field name="date_doc"/>
+                </xpath>
             </field>
         </record>
 <!--
@@ -61,9 +92,9 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account_voucher.view_invoice_supplier"/>
             <field name="arch" type="xml">
--->
-                <!--  <<<<<<<<<<<<<<<<< Inabilita boton "Regitrar Pago" de la vista en form provedores >>>>>>>>>>>>>>   -->
-<!--
+
+ <<<<<<<<<<<<<<<<< Inabilita boton "Regitrar Pago" de la vista en form provedores >>>>>>>>>>>>>>
+
                 <xpath expr="//button[@name='invoice_pay_customer']" position="attributes">
                        <attribute name="invisible">True</attribute>
                 </xpath>

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record id="inh_company_wh_iva" model="ir.ui.view">
+            <field name="name">inh.company.wh.iva</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_iva.res_company_wh_iva"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='propagate_invoice_date_to_vat_withholding']" position="after">
+                    <field name="seq_ini_wh_vat" placeholder="Ejm: 20160800000022"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

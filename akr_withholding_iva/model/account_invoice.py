@@ -86,7 +86,8 @@ class account_invoice(models.Model):
 
     @api.multi
     def action_move_create(self):
-        '''Metodo heredado para realizar la creacion del comprobante de retencion del proveedor al validar la factura. '''
+        '''Metodo heredado para realizar la creacion del comprobante
+           de retencion del proveedor al validar la factura. '''
         res = super(account_invoice, self).action_move_create()
 
         apply_wh = False
@@ -98,11 +99,19 @@ class account_invoice(models.Model):
             date_inv = datetime.strptime(self.date_invoice, "%Y-%m-%d")
             date_doc = datetime.strptime(self.date_document, "%Y-%m-%d")
 
+            # Generacion del codigo/Correlativo
             query = ''' select  MAX(number) FROM account_wh_iva '''
             self._cr.execute(query)
             val = self._cr.fetchone()
-            value = val and val[0] or (date_inv.strftime('%Y%m')+'0' or date_doc.strftime('%Y%m')+'0')
-            code = str(date_inv.strftime('%Y%m') or date_doc.strftime('%Y%m'))+str(int(value[6:])+1).zfill(8)
+            if val:
+                value = val[0]
+                code = str(date_inv.strftime('%Y%m') or date_doc.strftime('%Y%m'))+str(int(value[6:])+1).zfill(8)
+            elif not val and self.company_id.seq_ini_wh_vat:
+                code = self.company_id.seq_ini_wh_vat
+            else:
+                value = date_inv.strftime('%Y%m')+'0' or date_doc.strftime('%Y%m')+'0'
+                code = str(date_inv.strftime('%Y%m') or date_doc.strftime('%Y%m'))+str(int(value[6:])+1).zfill(8)
+
             account_invoice_tax = self.env['account.invoice.tax']
             account_wh_iva = self.env['account.wh.iva']
             wh_iva_val = False
@@ -113,18 +122,15 @@ class account_invoice(models.Model):
                 if self.consolidate_vat_wh: #Agrupar facturas en un comprobante diario
                     #verificamos si ya existe un comprobante generado para el proveedor con la fecha en curso
                     wh_iva_val = account_wh_iva.search([('partner_id','=',self.partner_id.id),('date_ret','=',datetime.now().strftime('%Y-%m-%d'))])
+
                 if self.tax_line: # verificamos si el documento tiene impuestos
                     base = 0
                     ret = 0
                     for i in self.tax_line:
                         number = self.nro_ctrl
-                        #if not i.tax_id.ret:
-                        if i.tax_id.ret:
-                            print '*****',i.name
-                            #base = i.base
-                            base = self.amount_total
-                            #ret = i.amount
-                            ret = i.base
+                        if not i.tax_id.ret:
+                            base = i.base
+                            ret = i.amount
                             name = i.name
                             inv_tax_id = i.id
                             account = self.type == 'in_invoice' and i.tax_id.wh_vat_collected_account_id.id or self.type == 'in_refund' and i.tax_id.wh_vat_paid_account_id.id or i.tax_id.account_collected_id.id
@@ -160,6 +166,10 @@ class account_invoice(models.Model):
 
                             if wh_iva_val:
                                 account_wh_iva.wh_iva_val.write({ 'wh_lines': [(0,0,details)] })
+
+                            elif self.type == 'in_refund':
+                                self.parent_id.wh_iva_id.write({ 'wh_lines': [(0,0,details)] })
+                                self.write({'wh_iva_id': self.parent_id.wh_iva_id.id })
                             else:
                                 wh_id = account_wh_iva.create(vals_wh)
                                 print '..........',wh_id.id

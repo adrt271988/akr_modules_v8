@@ -18,29 +18,40 @@ class account_voucher(osv.osv):
         move_obj = self.pool.get('account.move.line')
         invo_obj = self.pool.get('account.invoice')
 
-        for i in res['value']['line_dr_ids']:
-            print i
-            move_id = move_obj.browse(cr, uid, i['move_line_id']).move_id
-            if move_id:
-                invo_id = invo_obj.search(cr, uid, [('move_id', '=', move_id.id)])
-                inv_brw = invo_obj.browse(cr, uid, invo_id)
-                if inv_brw.islr_wh_doc_id:
-                    i.update({'amount_wh_islr': inv_brw.islr_wh_doc_id.amount_total_ret, 'amount_unreconciled': i['amount_unreconciled']-inv_brw.islr_wh_doc_id.amount_total_ret })
-                for j in inv_brw.tax_line:
-                    if j.tax_id.ret:
-                        i.update({'amount_wh_iva': j.amount,'amount_unreconciled': i['amount_unreconciled']-j.amount})
-
         for k in res['value']['line_cr_ids']:
-
+            print 'creditos======>',k
             move_id = move_obj.browse(cr, uid, k['move_line_id']).move_id
             if move_id:
-                invo_id = invo_obj.search(cr, uid, [('move_id', '=', move_id.id)])
-                inv_brw = invo_obj.browse(cr, uid, invo_id)
+                invoc_id = invo_obj.search(cr, uid, [('move_id', '=', move_id.id)])
+                inv_brw = invo_obj.browse(cr, uid, invoc_id)
+                if inv_brw:
+                    k.update({'amount_original': inv_brw.amount_untaxed+inv_brw.amount_tax,
+                              'invoice_number': inv_brw.supplier_invoice_number,
+                              'date_doc': inv_brw.date_document})
                 if inv_brw.islr_wh_doc_id:
-                    k.update({'amount_wh_islr': inv_brw.islr_wh_doc_id.amount_total_ret, 'amount_unreconciled': k['amount_unreconciled']-inv_brw.islr_wh_doc_id.amount_total_ret })
+                    k.update({'amount_wh_islr': inv_brw.islr_wh_doc_id.amount_total_ret,
+                              'amount_unreconciled': k['amount_unreconciled']-inv_brw.islr_wh_doc_id.amount_total_ret})
+
                 for r in inv_brw.tax_line:
                     if r.tax_id.ret:
-                        k.update({'amount_wh_iva': r.amount, 'amount_unreconciled': k['amount_unreconciled']-r.amount })
+                        k.update({'amount_wh_iva': r.amount,
+                                  'amount_unreconciled': k['amount_unreconciled']-r.amount})
+
+        for i in res['value']['line_dr_ids']:
+            print 'debitos======>',i
+            move_id = move_obj.browse(cr, uid, i['move_line_id']).move_id
+            if move_id:
+                invod_id = invo_obj.search(cr, uid, [('move_id', '=', move_id.id)])
+                inv_brw = invo_obj.browse(cr, uid, invod_id)
+                if inv_brw:
+                    i.update({'amount_original': inv_brw.amount_untaxed+inv_brw.amount_tax,
+                              'invoice_number':inv_brw.supplier_invoice_number,
+                              'date_doc': inv_brw.date_document})
+                if inv_brw.islr_wh_doc_id:
+                    i.update({'amount_wh_islr': inv_brw.islr_wh_doc_id.amount_total_ret }) #, 'amount_unreconciled': i['amount_original']i['amount_unreconciled']-inv_brw.islr_wh_doc_id.amount_total_ret
+                for j in inv_brw.tax_line:
+                    if j.tax_id.ret:
+                        i.update({'amount_wh_iva': j.amount}) #,'amount_unreconciled': i['amount_unreconciled']-j.amount
         return res
 
     _columns = {
@@ -59,6 +70,8 @@ class account_voucher_line(osv.osv):
     _columns = {
                 'amount_wh_iva':fields.float('Ret. IVA', digits_compute=dp.get_precision('Account')),
                 'amount_wh_islr':fields.float('Ret. ISLR', digits_compute=dp.get_precision('Account')),
+                'invoice_number': fields.char('Nro. Doc. Proveedor',size=24),
+                'date_doc': fields.date('Fecha del documento', readonly=True, select=True, states={'draft':[('readonly',False)]}),
 }
 
 account_voucher_line()

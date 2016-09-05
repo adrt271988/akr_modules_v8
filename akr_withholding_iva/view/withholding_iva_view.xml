@@ -2,22 +2,22 @@
 <openerp>
     <data>
         <!-- Inherit Withholding Iva Form -->
-<!--
-         <record id="inh_view_purchase_order_form" model="ir.ui.view">
-            <field name="name">inh.purchase.order.form</field>
-            <field name="model">purchase.order</field>
-            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+
+         <record id="inh_view_wh_iva_form" model="ir.ui.view">
+            <field name="name">inh.wh.iva.form</field>
+            <field name="model">account.wh.iva</field>
+            <field name="inherit_id" ref="l10n_ve_withholding_iva.view_wh_iva_form"/>
             <field name="arch" type="xml">
--->
-<!--
-                <xpath expr="//field[@name='amount_tax']" position="replace">
-                    <field name="amount_taxe" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <xpath expr="//button[@name='wh_iva_confirmed']" position="replace">
+                    <button name="wh_iva_confirmed" states="draft" string="Confirm" type="object" icon="gtk-go-forward"/>
                 </xpath>
--->
-<!--
+                <xpath expr="//button[@name='wh_iva_done']" position="replace">
+                    <button name="wh_iva_done" states="confirmed" string="Done" type="object" icon="gtk-execute"/>
+                </xpath>
+                <xpath expr="//button[@name='cancel']" position="replace">
+                    <button name="action_cancel" colspan="2" states="confirmed,draft,done" string="Cancel" type="object" icon="gtk-cancel"/>
+                </xpath>
             </field>
         </record>
--->
-
     </data>
 </openerp>

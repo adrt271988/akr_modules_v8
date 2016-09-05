@@ -12,6 +12,8 @@
             'report/withholding_vat_report.xml',
             'view/partner_view.xml',
             'view/account_tax_view.xml',
+            'view/withholding_iva_view.xml',
+            'view/company_view.xml',
             ],
     'init_xml': [],
     'update_xml': [],
