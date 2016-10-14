@@ -3,14 +3,13 @@
 <data>
 <template id="akr_report_invoice_document">
     <div class="page">
-        <div t-if="o.date_invoice">
-            <br/><br/><br/><br/>
+        <div t-if="o.date_invoice" style="margin-top:2.5cm;">
             <p t-field="o.date_invoice" align="right" style="font-size:12 px"/>
         </div>
         <br/>
         <div class="col-xs-12" style="font-size:11px;margin-left:40px;margin-bottom:50px;">
             <div class="col-xs-6">
-                <span t-field="o.partner_id.name"/><br/><br/>
+                <span style="margin-left:0.5cm;" t-field="o.partner_id.name"/><br/><br/>
                 <span t-field="o.partner_id.street"/> <span t-field="o.partner_id.street2"/><br/>
                 <span t-field="o.partner_id.vat"/>
                 <div t-if="o.partner_id.phone"><span t-field="o.partner_id.phone"/></div><div t-if="not o.partner_id.phone">&#160;&#160;&#160;&#160;&#160;&#160;</div>
@@ -19,7 +18,7 @@
                 <div t-if="o.user_id.name"><span t-field="o.user_id.name"/></div><div t-if="not o.user_id.name">&#160;&#160;&#160;&#160;&#160;&#160;</div>
             </div>
             <div class="col-xs-6">
-                <div style="border:1px solid;border-radius: 5px;width:100%;height:110px">
+                <div style="border:1px solid;border-radius: 5px;width:100%;height:110px;margin-right:10cm;">
                     <strong>DIRECCIÓN DE DESPACHO:</strong> <br/><span t-field="o.address_shipping_id.street"/> <span t-field="o.address_shipping_id.street2"/>
                 </div>
                 <div class="col-xs-12">
